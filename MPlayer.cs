@@ -11,6 +11,14 @@ namespace ProjectAdvance
 {
     class MPlayer : ModPlayer
     {
+        bool initialized = false;
+        int SkillPoints = 0;
+        bool[] SkillsById = new bool[15];
+        void initialize()
+        {
+            for (int i = 0; i < SkillsById.Length; i++) SkillsById[i] = false;
+        }
+        public void SetSkill(int position){SkillsById[position]=true;}
         Vector2 TeleportationPosition = new Vector2();
         bool CanTeleport = false;
         private void teleportationCheck()
@@ -21,6 +29,7 @@ namespace ProjectAdvance
             {
                 TeleportationPosition.Y -= 10;
                 CanTeleport = false;
+              
             }
             else if (Main.tile[TeleportationPosition.ToTileCoordinates().X, TeleportationPosition.ToTileCoordinates().Y].collisionType == 0 || Main.tile[TeleportationPosition.ToTileCoordinates().X, TeleportationPosition.ToTileCoordinates().Y].collisionType == -1)
             {
@@ -31,7 +40,6 @@ namespace ProjectAdvance
         private void teleportPlayer()
         {
             TeleportationPosition.Y -= 10;
-            Main.NewText("Puff! input" + Main.GetKeyState((int)Keys.X));
             for (int i = 0; i < 25; i++)
             {
                 int d = Dust.NewDust(TeleportationPosition, new Vector2(10, 10), 52, new Vector2(Main.rand.Next(-25, 25), -5));
@@ -42,10 +50,19 @@ namespace ProjectAdvance
    
         public override void PostUpdate()
         {
-          
+            if (!initialized)
+            {
+                initialize();
+                    initialized=true;
+                    Main.NewText("Skill tree initialized!");
+            }
+            
             base.PostUpdate();
-            if (Main.GetKeyState((int)Keys.X) == 1) teleportationCheck();
-            if (Main.GetKeyState((int)Keys.X) == -128 && CanTeleport == true) teleportPlayer();
+            if (SkillsById[3])
+            {
+                if (Main.GetKeyState((int)Keys.X) == 1) teleportationCheck();
+                if (Main.GetKeyState((int)Keys.X) == -128 && CanTeleport == true) teleportPlayer();
+            }
         }
       
     }
