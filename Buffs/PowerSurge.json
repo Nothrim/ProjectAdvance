@@ -1,0 +1,9 @@
+{
+	"displayName": "Power Surge",
+	"tip": "Next spell deals double damage",
+	"debuff": false,
+	"vanityPet": false,
+	"lightPet": false,
+	"enchantment": false,
+	"noTimer": true
+}

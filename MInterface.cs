@@ -10,38 +10,21 @@ using Terraria;
 using TAPI;
 namespace ProjectAdvance
 {
-
     class MInterface : ModInterface
     {
-        SkillTree tree;
-        SkillTreeImplementation skilltree;
-        Tree testree;
-        
+        SkillTree tree;      
         bool initialized = false;
         void Initialize(SpriteBatch sb)
         {
-            //not really working right now
-            //skilltree = new SkillTreeImplementation();
-            //skilltree.generateTree(3);
-            //skilltree.buildTree(skilltree.MAIN_ROOT);
-            tree = new SkillTree( sb);
+           tree = new SkillTree( sb);
            tree.buildSkillTree();
-            initialized = true;
-            testree = new Tree();
-           
-            testree.createTree(4);
-
-            
+           initialized = true;
         }
-        //static ItemSlot i = new ItemSlot(new ModBase(), "Slot", 0, i.ActionSet, i.ActionGet);
         public override bool PreDrawInterface(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
         {
             if (!initialized) Initialize(sb);
             tree.drawTree();
-            //testree.setupNodes(testree.root);
-            //skilltree.drawTree(skilltree.MAIN_ROOT,sb);
             return base.PreDrawInterface(sb);
         }
-       
     }
 }

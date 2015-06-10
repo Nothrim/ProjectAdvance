@@ -12,6 +12,7 @@ namespace ProjectAdvance
 {
     class ToggleElement
     {
+        #region variables
         //graphic variables-----------------------------------------
         private Vector2 position;
         private readonly int STANDARD_SIZE=20;
@@ -20,8 +21,7 @@ namespace ProjectAdvance
         private Rectangle SkillSlotSurface;
 //mechanic variables-------------------------------------------
         bool Chosen = false;
-//---------------------------------------------------
-
+        #endregion
 
         public ToggleElement(Vector2 position) {
             this.position=position;
@@ -34,25 +34,25 @@ namespace ProjectAdvance
             SkillSlotSurface.X = (int)position.X;
             SkillSlotSurface.Y = (int)position.Y;
         }
-
+        #region draw method
         public void draw(SpriteBatch sb)
         {
-            if(isChoosen())SkillImage=Main.goreTexture[GoreDef.gores["ProjectAdvance:ToggleElement1"]];
+            if(isChoosen())
+                SkillImage=Main.goreTexture[GoreDef.gores["ProjectAdvance:ToggleElement1"]];
             else
                 SkillImage=Main.goreTexture[GoreDef.gores["ProjectAdvance:ToggleElement0"]];
             if (SkillSlotSurface.Contains(Main.mouse))
             {
                 if (SkillSlotSurface.Contains(Main.mouse) && Main.mouseLeft)
                 {
-
                     sb.Draw(SkillImage, SkillSlotSurface, Color.Peru);
                     if (Main.mouseLeftRelease)
                     {
-                        if (isChoosen()) setChoosen(false);
+                        if (isChoosen()) 
+                            setChoosen(false);
                         else
                             setChoosen(true);
                     }
-
                 }
                 else
                     sb.Draw(SkillImage, SkillSlotSurface, Color.Orange);
@@ -60,7 +60,7 @@ namespace ProjectAdvance
             else
                 sb.Draw(SkillImage, SkillSlotSurface, Color.White);
         }
-
+        #endregion
         public bool isChoosen() { return Chosen; }
         public void setChoosen(bool chosen) { Chosen = chosen; }
         public Vector2 getPosition() { return position; }

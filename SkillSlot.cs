@@ -28,9 +28,10 @@ namespace ProjectAdvance
             this.ImageName = ImageName;
             SkillSlotSurface = new Rectangle((int)position.X, (int)position.Y, STANDARD_SIZE, STANDARD_SIZE);
             SkillImage = Main.goreTexture[GoreDef.gores[ImageName]];
+         
             this.SkillId = SkillId;
         }
-        
+
         public void setPosition(Vector2 position){
             this.position=position;
             SkillSlotSurface.X = (int)position.X;
@@ -43,19 +44,31 @@ namespace ProjectAdvance
             {
                 if (SkillSlotSurface.Contains(Main.mouse) && Main.mouseLeft)
                 {
-
                     sb.Draw(SkillImage, SkillSlotSurface, Color.Peru);
                     if (Main.mouseLeftRelease)
                     {
-                        Main.NewText(getID() + ""); 
-                        player.SetSkill(getID());
+                        if (!Chosen)
+                        {
+                            if (player.checkPreviousSkill(getID()))
+                            {
+                                player.setSkill(getID());
+                                Chosen = true;
+                            }
+                            else
+                            {
+                                Main.PlaySound("ProjectAdvance:beep", Main.localPlayer.position.X, Main.localPlayer.position.Y);
+                            }
+                        }
                     }
                 }
                 else
                     sb.Draw(SkillImage, SkillSlotSurface, Color.Orange);
             }
             else
-                sb.Draw(SkillImage, SkillSlotSurface, Color.White);
+                if (Chosen) 
+                    sb.Draw(SkillImage, SkillSlotSurface, Color.White);
+                else
+                    sb.Draw(SkillImage, SkillSlotSurface, Color.Gray);
         }
 
         public bool isChoosen() { return Chosen; }

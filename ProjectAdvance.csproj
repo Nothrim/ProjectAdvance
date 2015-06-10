@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Buffs\PowerSurge.json" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
@@ -46,7 +47,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Buffs\" />
     <Folder Include="Items\" />
     <Folder Include="NPCs\" />
     <Folder Include="Prefixes\" />
@@ -56,6 +56,7 @@
     <Folder Include="Walls\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Buffs\PowerSurge.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="MInterface.cs" />
     <Compile Include="MPlayer.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Tree.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Buffs\PowerSurge.png" />
     <Content Include="Gores\1x1.png" />
     <Content Include="Gores\PlaceholderFrame.png" />
     <Content Include="Gores\ToggleElement0.png" />

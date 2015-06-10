@@ -11,14 +11,66 @@ namespace ProjectAdvance
 {
     class MPlayer : ModPlayer
     {
+        #region variables
         bool initialized = false;
-        int SkillPoints = 0;
+        int SkillPoints = 20;
         bool[] SkillsById = new bool[15];
+        int SurgeTimer = 0;
+        public int getSkillPoints() { return SkillPoints; }
+        public void spendSkillPoint() { SkillPoints--; }
+        public void grandSkillPoint() { SkillPoints++; }
+        #endregion
+        #region SaveLoadInitialization
         void initialize()
         {
             for (int i = 0; i < SkillsById.Length; i++) SkillsById[i] = false;
         }
-        public void SetSkill(int position){SkillsById[position]=true;}
+        public override void Load(BinBuffer bb)
+        {
+            base.Load(bb);
+            if(bb.HasLeft)
+            SkillPoints = bb.ReadInt();
+            for (int i = 0; i < SkillsById.Length; i++)
+            {
+                if (bb.HasLeft)
+                SkillsById[i] = bb.ReadBool();
+            }
+            if (bb.HasLeft)
+                initialized = bb.ReadBool();
+        }
+        public override void Save(BinBuffer bb)
+        {
+            base.Save(bb);
+            bb.Write(SkillPoints);
+            for (int i = 0; i < SkillsById.Length; i++)
+                bb.Write(SkillsById[i]);
+            bb.Write(initialized);
+        }
+        #endregion
+        public bool checkPreviousSkill(int i) 
+        { 
+            if(i > 0 && i < SkillsById.Length)
+            {
+                return SkillsById[i - 1];
+            }
+            else
+            return true;
+        }
+        public void setSkill(int position)
+        {
+            if (!SkillsById[position])
+            {
+                SkillsById[position] = true;
+                spendSkillPoint();
+            }
+        }
+        public bool checkSkillAtPosition(int i)
+        {
+            if (i >= 0 && i < SkillsById.Length) 
+                return SkillsById[i];
+            else
+                return false;
+        }
         Vector2 TeleportationPosition = new Vector2();
         bool CanTeleport = false;
         private void teleportationCheck()
@@ -29,7 +81,6 @@ namespace ProjectAdvance
             {
                 TeleportationPosition.Y -= 10;
                 CanTeleport = false;
-              
             }
             else if (Main.tile[TeleportationPosition.ToTileCoordinates().X, TeleportationPosition.ToTileCoordinates().Y].collisionType == 0 || Main.tile[TeleportationPosition.ToTileCoordinates().X, TeleportationPosition.ToTileCoordinates().Y].collisionType == -1)
             {
@@ -46,24 +97,35 @@ namespace ProjectAdvance
                 Main.dust[d].noGravity = true;
             }
             player.position = TeleportationPosition;
+            player.velocity.Y += 1;
         }
-   
         public override void PostUpdate()
         {
             if (!initialized)
             {
                 initialize();
-                    initialized=true;
-                    Main.NewText("Skill tree initialized!");
+                initialized=true;
+                Main.NewText("Skill tree initialized!");
             }
-            
             base.PostUpdate();
-            if (SkillsById[3])
+            if (SkillsById[3] && player==Main.localPlayer)
             {
                 if (Main.GetKeyState((int)Keys.X) == 1) teleportationCheck();
                 if (Main.GetKeyState((int)Keys.X) == -128 && CanTeleport == true) teleportPlayer();
             }
-        }
-      
+            if(SkillsById[2] && player==Main.localPlayer)
+            {
+                if (player.HasBuff(BuffDef.byName["ProjectAdvance:PowerSurge"]) == 2)
+                    SurgeTimer = 0;
+                else
+                    SurgeTimer++;
+          
+                if (SurgeTimer > 360)
+                {
+                    Main.NewText("Buff Added!");
+                    player.AddBuff(BuffDef.byName["ProjectAdvance:PowerSurge"], 6000);
+                }
+            }
+        }  
     }
 }
