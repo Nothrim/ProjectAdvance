@@ -33,7 +33,11 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Buffs\ManaBreak.json" />
+    <None Include="Buffs\Absorption.json" />
     <None Include="Buffs\PowerSurge.json" />
+    <None Include="Items\PrimeElement.json" />
+    <None Include="Projectiles\ManaWhirl.json" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
@@ -47,31 +51,41 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Items\" />
     <Folder Include="NPCs\" />
     <Folder Include="Prefixes\" />
-    <Folder Include="Projectiles\" />
-    <Folder Include="Sounds\" />
     <Folder Include="Tiles\" />
     <Folder Include="Walls\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Buffs\ManaBreak.cs" />
+    <Compile Include="Buffs\Absorption.cs" />
     <Compile Include="Buffs\PowerSurge.cs" />
     <Compile Include="Line.cs" />
+    <Compile Include="Items\PrimeElement.cs" />
     <Compile Include="MInterface.cs" />
     <Compile Include="MPlayer.cs" />
+    <Compile Include="Projectiles\ManaWhirl.cs" />
     <Compile Include="SkillTree.cs" />
     <Compile Include="SkillSlot.cs" />
-    <Compile Include="SkillTreeImplementation.cs" />
     <Compile Include="ToggleElement.cs" />
-    <Compile Include="Tree.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Buffs\Absorption.png" />
+    <Content Include="Buffs\ManaBreak.png" />
     <Content Include="Buffs\PowerSurge.png" />
     <Content Include="Gores\1x1.png" />
+    <Content Include="Gores\Blink.png" />
+    <Content Include="Gores\MagicElement.png" />
+    <Content Include="Gores\ManaBlast.png" />
+    <Content Include="Gores\ManaShield.png" />
     <Content Include="Gores\PlaceholderFrame.png" />
+    <Content Include="Gores\PowerSurge.png" />
     <Content Include="Gores\ToggleElement0.png" />
     <Content Include="Gores\ToggleElement1.png" />
+    <Content Include="Items\PrimeElement.png" />
+    <Content Include="Projectiles\ManaWhirl.png" />
+    <Content Include="Sounds\beep.wav" />
+    <Content Include="Sounds\BigDrum.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

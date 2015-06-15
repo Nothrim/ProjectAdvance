@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria;
 using TAPI;
+using Microsoft.Xna.Framework.Input;
 namespace ProjectAdvance
 {
     class SkillSlot 
@@ -21,6 +22,8 @@ namespace ProjectAdvance
 //mechanic variables-------------------------------------------
         bool Chosen = false;
         int SkillId;
+        bool Usable = false;
+        Keys? Hotkey = null;
 //---------------------------------------------------
     
         public SkillSlot(Vector2 position,String ImageName,int SkillId) {
@@ -32,16 +35,31 @@ namespace ProjectAdvance
             this.SkillId = SkillId;
         }
 
+        public void usable() { Usable = true; }
         public void setPosition(Vector2 position){
             this.position=position;
             SkillSlotSurface.X = (int)position.X;
             SkillSlotSurface.Y = (int)position.Y;
         }
 
+        public void setTexture(string TexturePath) 
+        { 
+            ImageName = TexturePath;
+            SkillImage = Main.goreTexture[GoreDef.gores[ImageName]];
+        }
+
         public void draw(SpriteBatch sb)
         {
             if (SkillSlotSurface.Contains(Main.mouse))
             {
+                player.cantUse();
+                if(Chosen && Usable && Keyboard.GetState().GetPressedKeys().Length>0)
+                {
+                    if (player.Hotkeys.ContainsKey(getID())) player.Hotkeys[getID()] = Keyboard.GetState().GetPressedKeys()[0];
+                    else 
+                    player.Hotkeys.Add(getID(), Keyboard.GetState().GetPressedKeys()[0]);
+                    Hotkey = Keyboard.GetState().GetPressedKeys()[0];
+                }
                 if (SkillSlotSurface.Contains(Main.mouse) && Main.mouseLeft)
                 {
                     sb.Draw(SkillImage, SkillSlotSurface, Color.Peru);
@@ -49,7 +67,7 @@ namespace ProjectAdvance
                     {
                         if (!Chosen)
                         {
-                            if (player.checkPreviousSkill(getID()))
+                            if (player.checkPreviousSkill(getID()) && player.getSkillPoints()>0)
                             {
                                 player.setSkill(getID());
                                 Chosen = true;
@@ -61,14 +79,38 @@ namespace ProjectAdvance
                         }
                     }
                 }
+                //temporary dev funcionality to clear and test
+                else if (SkillSlotSurface.Contains(Main.mouse) && Main.mouseRight)
+                {
+                    sb.Draw(SkillImage, SkillSlotSurface, Color.Peru);
+                    if (Main.mouseLeftRelease)
+                    {
+                        if (Chosen)
+                        {
+                                player.clearSkill(getID());
+                                Chosen = false;
+                        }
+                    }
+                }
+                //temporary
                 else
                     sb.Draw(SkillImage, SkillSlotSurface, Color.Orange);
             }
+               
             else
                 if (Chosen) 
                     sb.Draw(SkillImage, SkillSlotSurface, Color.White);
                 else
                     sb.Draw(SkillImage, SkillSlotSurface, Color.Gray);
+            if (Usable)
+            {
+                if (Hotkey != null)
+                {
+                    sb.DrawString(Main.fontMouseText, Hotkey.ToString(), position, Color.LightYellow);
+                }
+                else
+                    sb.DrawString(Main.fontMouseText, "-", new Vector2(position.X,position.Y+STANDARD_SIZE), Color.LightYellow);
+            }
         }
 
         public bool isChoosen() { return Chosen; }

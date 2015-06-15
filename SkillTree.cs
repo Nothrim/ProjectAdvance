@@ -37,6 +37,13 @@ namespace ProjectAdvance
                 Tree.Add(new SkillSlot(StartingPoint+new Vector2(i*60,0), "ProjectAdvance:PlaceholderFrame", i));
                 Tree.ElementAt(i).setChoosen(player.checkSkillAtPosition(i));
             }
+            Tree[0].setTexture("ProjectAdvance:MagicElement");
+            Tree[1].setTexture("ProjectAdvance:ManaShield");
+            Tree[2].setTexture("ProjectAdvance:PowerSurge");
+            Tree[3].setTexture("ProjectAdvance:Blink");
+            Tree[3].usable();
+            Tree[4].setTexture("ProjectAdvance:ManaBlast");
+            Tree[4].usable();
         }
         public void drawTree()
         {
@@ -53,6 +60,12 @@ namespace ProjectAdvance
                 }
                 sb.DrawString(Main.fontMouseText, "Skill Points: " + Convert.ToString(player.getSkillPoints()), new Vector2(ToggleTree.getPosition().X + 25, ToggleTree.getPosition().Y), Color.White);
             }
+        }
+        public SkillSlot getSkillAtPosition(int i)
+        {
+            if (i > -1 && i < Tree.Count)
+                return Tree[i];
+            return null;
         }
         public void updateTree()
         {

@@ -1,0 +1,8 @@
+{
+	"displayName": "Mana Break",
+	"tip": "Your Mana is completly depleted",
+	"debuff": true,
+	"vanityPet": false,
+	"lightPet": false,
+	"enchantment": false
+}

@@ -1,0 +1,10 @@
+﻿{
+	"displayName": "Mana Whirl",
+	"size": [400, 400],
+	"aiStyle": 0,
+	"timeLeft": 30,
+	"friendly": true,
+	"hostile": false,	
+	"tileCollide": false,
+	"damage": 0
+}

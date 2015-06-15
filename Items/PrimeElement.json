@@ -1,0 +1,21 @@
+{
+	"displayName": "Prime Element",
+	"size": [28,26],
+	"maxStack": 1,
+	"value": [0,10,8,20],	
+	"rare": 7,
+	"useStyle": 2,
+	"useAnimation": 15,
+	"useTime": 10,
+	"useSound": 3,
+	"useTurn": true,
+	"tooltip": "Absorb it to gain Skill Point",
+	"buff": "ProjectAdvance:Absorption",
+	"buffTime": 5,
+	"consumable": true,
+	"recipes":
+	[{
+		"items": { "Dirt Block": 1 }, 
+		"creates": 1
+	}]	
+}

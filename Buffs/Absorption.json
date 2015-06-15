@@ -1,0 +1,8 @@
+{
+	"displayName": "Absorption",
+	"tip": "Absorbing Skill Point",
+	"debuff": false,
+	"vanityPet": false,
+	"lightPet": false,
+	"enchantment": false
+}

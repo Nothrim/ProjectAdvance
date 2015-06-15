@@ -12,11 +12,13 @@ namespace ProjectAdvance
 {
     class MInterface : ModInterface
     {
+        public static SkillTree ChoosenTree=null;
         SkillTree tree;      
         bool initialized = false;
         void Initialize(SpriteBatch sb)
         {
            tree = new SkillTree( sb);
+           ChoosenTree = tree;
            tree.buildSkillTree();
            initialized = true;
         }
