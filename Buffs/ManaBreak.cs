@@ -23,5 +23,6 @@ namespace ProjectAdvance.Buffs
             base.Effects(npc, index);
             Dust.NewDust(npc.position, 10, 10, 67, 0, 0);
         }
+        
     }
 }

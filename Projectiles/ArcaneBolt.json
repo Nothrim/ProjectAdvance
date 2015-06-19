@@ -1,0 +1,15 @@
+﻿{
+	"displayName": "Arcane Bolt",
+	"size": [42, 22],
+	"aiStyle": 0,
+	"timeLeft": 600,
+	"friendly": true,
+	"hostile": false,	
+	"titleColide":false,
+	"damage": 1,
+	"ignoreWater": true,
+	"magic": true,
+	"frameCount": 3,
+	"noGravity": true, 
+	"penetrate": 1
+}

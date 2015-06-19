@@ -33,10 +33,12 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Buffs\DispersionBuff.json" />
     <None Include="Buffs\ManaBreak.json" />
     <None Include="Buffs\Absorption.json" />
     <None Include="Buffs\PowerSurge.json" />
     <None Include="Items\PrimeElement.json" />
+    <None Include="Projectiles\ArcaneBolt.json" />
     <None Include="Projectiles\ManaWhirl.json" />
   </ItemGroup>
   <ItemGroup>
@@ -57,13 +59,16 @@
     <Folder Include="Walls\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Buffs\DispersionBuff.cs" />
     <Compile Include="Buffs\ManaBreak.cs" />
     <Compile Include="Buffs\Absorption.cs" />
     <Compile Include="Buffs\PowerSurge.cs" />
+    <Compile Include="Cooldown.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="Items\PrimeElement.cs" />
     <Compile Include="MInterface.cs" />
     <Compile Include="MPlayer.cs" />
+    <Compile Include="Projectiles\ArcaneBolt.cs" />
     <Compile Include="Projectiles\ManaWhirl.cs" />
     <Compile Include="SkillTree.cs" />
     <Compile Include="SkillSlot.cs" />
@@ -71,10 +76,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Buffs\Absorption.png" />
+    <Content Include="Buffs\DispersionBuff.png" />
     <Content Include="Buffs\ManaBreak.png" />
     <Content Include="Buffs\PowerSurge.png" />
     <Content Include="Gores\1x1.png" />
+    <Content Include="Gores\ArcaneBarrage.png" />
     <Content Include="Gores\Blink.png" />
+    <Content Include="Gores\Dispersion.png" />
     <Content Include="Gores\MagicElement.png" />
     <Content Include="Gores\ManaBlast.png" />
     <Content Include="Gores\ManaShield.png" />
@@ -83,6 +91,7 @@
     <Content Include="Gores\ToggleElement0.png" />
     <Content Include="Gores\ToggleElement1.png" />
     <Content Include="Items\PrimeElement.png" />
+    <Content Include="Projectiles\ArcaneBolt.png" />
     <Content Include="Projectiles\ManaWhirl.png" />
     <Content Include="Sounds\beep.wav" />
     <Content Include="Sounds\BigDrum.wav" />

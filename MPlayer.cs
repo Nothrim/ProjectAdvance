@@ -18,19 +18,25 @@ namespace ProjectAdvance
         bool initialized = false;
         int SkillPoints = 0;
         int SkillLevel = 0;
+        int DispersionTimer=0;
+        int DispersionCount = 0;
         bool[] SkillsById = new bool[15];
         int SurgeTimer = 0;
         public int getSkillPoints() { return SkillPoints; }
         public void spendSkillPoint() { SkillPoints--; }
         public void grandSkillPoint() { SkillPoints++; }
+        bool ArcaneBoltOnCooldown;
+        int ArcaneBoltCooldown = 0;
         #endregion
         #region SaveLoadInitialization
         public void cantUse() { CanUse = false; }
 
         void initialize()
         {
+
             for (int i = 0; i < SkillsById.Length; i++) SkillsById[i] = false;
         }
+        public int getArcaneMisslesCd() { return ArcaneBoltCooldown; }
         public override void Load(BinBuffer bb)
         {
             base.Load(bb);
@@ -45,17 +51,24 @@ namespace ProjectAdvance
                 initialized = bb.ReadBool();
             if (bb.HasLeft)
             {
+                int key;
+                Keys? value;
                 int length = bb.ReadInt();
-                Main.NewText("Length" + length);
                 for (int i = 0; i < length; i++)
                 {
                     if (bb.HasLeft)
                     {
-                        Main.NewText(bb.ReadInt() + ":" + (Keys?)bb.ReadInt());
+                        if (Hotkeys.ContainsKey(key = bb.ReadInt()))
+                        {
+                            Hotkeys[key] = (value=(Keys?)bb.ReadInt());
+                        }
+                        //else
+                        //Hotkeys.Add(key, value=(Keys?)bb.ReadInt());
+                        //Main.NewText("Loaded Key: " + key+" and value: "+value);
                     }
 
                 }
-            }       
+            }
         }
         public override void Save(BinBuffer bb)
         {
@@ -106,6 +119,7 @@ namespace ProjectAdvance
         bool CanTeleport = false;
         private void teleportationCheck()
         {
+          
             if (Math.Abs(TeleportationPosition.X - Main.mouseWorld.X) > 25)
                 TeleportationPosition = Main.mouseWorld;
             if (Main.tile[TeleportationPosition.ToTileCoordinates().X, TeleportationPosition.ToTileCoordinates().Y].collisionType == 1)
@@ -138,6 +152,7 @@ namespace ProjectAdvance
                         n.life = Math.Max(1, n.life - p.statManaMax);
                         CombatText.NewText(new Rectangle((int)n.position.X, (int)n.position.Y, 40, 10), Color.Cyan, Math.Max(1, n.life - p.statManaMax).ToString());
                         n.AddBuff(BuffDef.byName["ProjectAdvance:ManaBreak"], 300);
+                        n.AddBuff(67, 180);
                     }
                 }
             }
@@ -159,14 +174,32 @@ namespace ProjectAdvance
                     Main.dust[d].noGravity = true;
                 }
                 player.position = TeleportationPosition;
+                TeleportationPosition = player.position;
+                CanTeleport = false;
                 player.velocity.Y += 1;
             }
         }
         public override void PostUpdate()
         {
             CanUse = true;
+            DispersionTimer++;
+
+            if(DispersionTimer>600)
+            {
+                DispersionTimer = 0;
+                DispersionCount = 0;
+            }
+            if (ArcaneBoltOnCooldown) {
+                ArcaneBoltCooldown++;
+                if(ArcaneBoltCooldown>600)
+                {
+                    ArcaneBoltCooldown = 0;
+                    ArcaneBoltOnCooldown = false;
+                }
+            }
             base.PreUpdate();
         }
+       
 
         public override void MidUpdate()
         {
@@ -175,21 +208,20 @@ namespace ProjectAdvance
             {
                 initialize();
                 initialized=true;
-                Main.NewText("Skill tree initialized!");
             }
             base.PostUpdate();
-            if (CanUse)
+            if (CanUse && player==Main.localPlayer)
             {
-                if (SkillsById[3] && player == Main.localPlayer)
+                if (SkillsById[3])
                 {
                     if (Hotkeys.ContainsKey(3))
                     {
-                        if (Main.GetKeyState((int)Hotkeys[3]) == 1) teleportationCheck();
-                        if (Main.GetKeyState((int)Hotkeys[3]) == -128 && CanTeleport == true) teleportPlayer();
+                        if (Main.GetKeyState((int)Hotkeys[3]) == -127 || Main.GetKeyState((int)Hotkeys[3]) == -128) teleportationCheck();
+                        if ((Main.mouseRight && Main.mouseRightRelease) && CanTeleport == true) teleportPlayer();
                     }
                 }
 
-                if (SkillsById[2] && player == Main.localPlayer)
+                if (SkillsById[2])
                 {
                     if (player.HasBuff(BuffDef.byName["ProjectAdvance:PowerSurge"]) == 0)
                     {
@@ -202,7 +234,7 @@ namespace ProjectAdvance
                         player.AddBuff(BuffDef.byName["ProjectAdvance:PowerSurge"], 6000);
                     }
                 }
-                if (SkillsById[4] && player == Main.localPlayer)
+                if (SkillsById[4])
                 {
                     if (Hotkeys.ContainsKey(4))
                     {
@@ -213,6 +245,54 @@ namespace ProjectAdvance
                                 manaBlast(Main.localPlayer);
                             }
 
+                        }
+                    }
+                }
+                if(SkillsById[5])
+                {
+                    if (Hotkeys.ContainsKey(5))
+                    {
+                        if (Hotkeys[5] != null)
+                        {
+                            if ((Main.GetKeyState((int)Hotkeys[5]) == -127 || Main.GetKeyState((int)Hotkeys[5]) == -128) && player.statMana>=60)
+                            {
+                                if (player.HasBuff(BuffDef.byName["ProjectAdvance:DispersionBuff"]) == -1)
+                                {
+                                    player.statMana -= 60;
+                                    player.AddBuff(BuffDef.byName["ProjectAdvance:DispersionBuff"], 60);
+                                    if(DispersionCount++>3)
+                                        player.AddBuff(BuffDef.byName["ProjectAdvance:ManaBreak"], 180);
+
+                                }
+                            }
+
+                        }
+                    }
+                }
+                if(SkillsById[6])
+                {
+                    if(Hotkeys.ContainsKey(6))
+                    {
+                        if(Hotkeys[6]!=null)
+                        {
+                            if ((Main.GetKeyState((int)Hotkeys[6]) == -127 || Main.GetKeyState((int)Hotkeys[6]) == -128) && player.statMana >= 60)
+                            {
+                                if (!ArcaneBoltOnCooldown)
+                                {
+                                    int counter = 0;
+                                    foreach (NPC n in Main.npc)
+                                    {
+
+                                        if (!n.friendly && n.active && Vector2.Distance(player.position, n.position) < 1800)
+                                        {
+                                            counter++;
+                                            Main.projectile[Projectile.NewProjectile(player.position, new Vector2(0.3f * Main.rand.Next(-3, 3), -0.3f * Main.rand.Next(3)), ProjDef.byName["ProjectAdvance:ArcaneBolt"].type, 50, 1, player.whoAmI)].GetSubClass<Projectiles.ArcaneBolt>().setTarget(n);
+                                        }
+                                        if(counter>0)
+                                        ArcaneBoltOnCooldown = true;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -227,6 +307,16 @@ namespace ProjectAdvance
                 damage = (int)(damage*0.8);
                 Dust.NewDust(player.position, new Vector2(10, 10), 50);
             }
+        }
+        public override void ModifyDrawLayerList(List<PlayerLayer> list)
+        {
+            if (player.HasBuff(BuffDef.byName["ProjectAdvance:DispersionBuff"]) == 1)
+            {
+
+                foreach (PlayerLayer p in list)
+                    p.visible = false;
+            }
+            base.ModifyDrawLayerList(list);
         }
     }
 }

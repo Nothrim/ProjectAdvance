@@ -24,6 +24,7 @@ namespace ProjectAdvance
         int SkillId;
         bool Usable = false;
         Keys? Hotkey = null;
+        String Tooltip = "";
 //---------------------------------------------------
     
         public SkillSlot(Vector2 position,String ImageName,int SkillId) {
@@ -34,7 +35,7 @@ namespace ProjectAdvance
          
             this.SkillId = SkillId;
         }
-
+        public void setTooltip(String Tooltip) { this.Tooltip = Tooltip; }
         public void usable() { Usable = true; }
         public void setPosition(Vector2 position){
             this.position=position;
@@ -53,6 +54,8 @@ namespace ProjectAdvance
             if (SkillSlotSurface.Contains(Main.mouse))
             {
                 player.cantUse();
+                if(Tooltip!="")
+                sb.DrawString(Main.fontMouseText, Tooltip, new Vector2(position.X, position.Y + STANDARD_SIZE+20), Color.LightGray);
                 if(Chosen && Usable && Keyboard.GetState().GetPressedKeys().Length>0)
                 {
                     if (player.Hotkeys.ContainsKey(getID())) player.Hotkeys[getID()] = Keyboard.GetState().GetPressedKeys()[0];
