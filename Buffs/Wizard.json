@@ -1,0 +1,10 @@
+{
+	"displayName": "Wizard",
+	"tip": "You are a Wizard",
+	"debuff": true,
+	"vanityPet": false,
+	"lightPet": false,
+	"enchantment": false,
+	"noTimer":true
+
+}

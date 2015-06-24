@@ -12,7 +12,7 @@ namespace ProjectAdvance
 {
     class SkillSlot 
     {
-        static readonly MPlayer player = (MPlayer)Main.localPlayer.GetSubClass<MPlayer>();
+        MPlayer player = (MPlayer)Main.localPlayer.GetSubClass<MPlayer>();
 //graphic variables-----------------------------------------
         private Vector2 position;
         private readonly int STANDARD_SIZE=40;
@@ -25,6 +25,7 @@ namespace ProjectAdvance
         bool Usable = false;
         Keys? Hotkey = null;
         String Tooltip = "";
+        int CooldownTimer = 0;
 //---------------------------------------------------
     
         public SkillSlot(Vector2 position,String ImageName,int SkillId) {
@@ -35,6 +36,8 @@ namespace ProjectAdvance
          
             this.SkillId = SkillId;
         }
+        public void updateMPlayer(MPlayer m) { player = m; }
+        public void setHotkey(Keys? hotkey) { Hotkey = hotkey; }
         public void setTooltip(String Tooltip) { this.Tooltip = Tooltip; }
         public void usable() { Usable = true; }
         public void setPosition(Vector2 position){
@@ -48,11 +51,13 @@ namespace ProjectAdvance
             ImageName = TexturePath;
             SkillImage = Main.goreTexture[GoreDef.gores[ImageName]];
         }
+        public void setCooldownTimer(int time) { CooldownTimer = time; }
 
         public void draw(SpriteBatch sb)
         {
             if (SkillSlotSurface.Contains(Main.mouse))
             {
+                player.player.mouseInterface = true;
                 player.cantUse();
                 if(Tooltip!="")
                 sb.DrawString(Main.fontMouseText, Tooltip, new Vector2(position.X, position.Y + STANDARD_SIZE+20), Color.LightGray);
@@ -73,6 +78,10 @@ namespace ProjectAdvance
                             if (player.checkPreviousSkill(getID()) && player.getSkillPoints()>0)
                             {
                                 player.setSkill(getID());
+                                if(CooldownTimer!=0)
+                                {
+                                    player.setCooldown(getID(), CooldownTimer, ImageName, ImageName);
+                                }
                                 Chosen = true;
                             }
                             else
@@ -83,19 +92,7 @@ namespace ProjectAdvance
                     }
                 }
                 //temporary dev funcionality to clear and test
-                else if (SkillSlotSurface.Contains(Main.mouse) && Main.mouseRight)
-                {
-                    sb.Draw(SkillImage, SkillSlotSurface, Color.Peru);
-                    if (Main.mouseLeftRelease)
-                    {
-                        if (Chosen)
-                        {
-                                player.clearSkill(getID());
-                                Chosen = false;
-                        }
-                    }
-                }
-                //temporary
+
                 else
                     sb.Draw(SkillImage, SkillSlotSurface, Color.Orange);
             }

@@ -14,82 +14,109 @@ namespace ProjectAdvance
        
         #region variables
         bool CanUse = true;
-        public Dictionary<int,Keys?> Hotkeys=new Dictionary<int,Keys?>();
-        bool initialized = false;
-        int SkillPoints = 0;
-        int SkillLevel = 0;
+        public CooldownManager CManager;
+        bool loaded = false;
+        bool TreeCleared = false;
         int DispersionTimer=0;
         int DispersionCount = 0;
-        bool[] SkillsById = new bool[15];
+        bool[] SkillsById;
+        int SkillPoints = 0;
+        int SkillLevel = 0;
+        public Dictionary<int, Keys?> Hotkeys = new Dictionary<int, Keys?>();
         int SurgeTimer = 0;
+        static MInterface minterface = (MInterface)SuperModsBase.SMB.modInterface;
         public int getSkillPoints() { return SkillPoints; }
-        public void spendSkillPoint() { SkillPoints--; }
-        public void grandSkillPoint() { SkillPoints++; }
-        bool ArcaneBoltOnCooldown;
-        int ArcaneBoltCooldown = 0;
+        public void spendSkillPoint() 
+        {
+            if (SkillPoints > SkillLevel) SkillPoints = SkillLevel;
+            if (SkillPoints < 0) SkillPoints = 0;
+            SkillPoints--; 
+        }
+        public void grandSkillPoint() 
+        {
+            if (SkillLevel < 9)
+            {
+                SkillLevel++;
+                SkillPoints++;
+            }
+        }
         #endregion
         #region SaveLoadInitialization
         public void cantUse() { CanUse = false; }
-
-        void initialize()
+        public override void Initialize()
         {
-
-            for (int i = 0; i < SkillsById.Length; i++) SkillsById[i] = false;
+                SkillsById = new bool[10];
+                SkillPoints = 0;
+                SkillLevel = 0;
+                loaded = false;
+                TreeCleared = false;
+                base.Initialize();
         }
-        public int getArcaneMisslesCd() { return ArcaneBoltCooldown; }
+
         public override void Load(BinBuffer bb)
         {
-            base.Load(bb);
-            if(bb.HasLeft)
-            SkillPoints = bb.ReadInt();
-            for (int i = 0; i < SkillsById.Length; i++)
+            if (bb.Size > 0)
             {
-                if (bb.HasLeft)
-                SkillsById[i] = bb.ReadBool();
-            }
-            if (bb.HasLeft)
-                initialized = bb.ReadBool();
-            if (bb.HasLeft)
-            {
+                SkillPoints = bb.ReadInt();
+                SkillLevel = bb.ReadInt();
+                bool read;
+                for (int i = 0; i < SkillsById.Length; i++)
+                {
+                    read = bb.ReadBool();
+                    if (read)
+                    {
+                        SkillsById[i] = read;
+                    }
+                }
                 int key;
-                Keys? value;
                 int length = bb.ReadInt();
                 for (int i = 0; i < length; i++)
                 {
-                    if (bb.HasLeft)
+                    key = bb.ReadInt();
+                    if (Hotkeys.ContainsKey(key))
                     {
-                        if (Hotkeys.ContainsKey(key = bb.ReadInt()))
-                        {
-                            Hotkeys[key] = (value=(Keys?)bb.ReadInt());
-                        }
-                        //else
-                        //Hotkeys.Add(key, value=(Keys?)bb.ReadInt());
-                        //Main.NewText("Loaded Key: " + key+" and value: "+value);
+                        Hotkeys[key] = (Keys)bb.ReadInt();
                     }
-
+                    else
+                    {
+                        Hotkeys.Add(key, (Keys)bb.ReadInt());
+                    }
                 }
             }
+                if (!loaded) 
+                {
+        
+                    loaded = true;
+                    CManager = new CooldownManager(new Vector2(Main.screenWidth, Main.screenHeight), Main.spriteBatch);
+                    if (SkillsById[2]) { CManager.addCooldown(2, "PowerSurge", "ProjectAdvance:PowerSurge", 360); }
+                    if (SkillsById[7]) { CManager.addCooldown(7, "SageMode", "ProjectAdvance:SageMode", 18000); }
+                    if (SkillsById[6]) { CManager.addCooldown(6, "ArcaneBarrage", "ProjectAdvance:ArcaneBarrage", 600); }
+                    if (SkillsById[0]) { player.AddBuff(BuffDef.byName["ProjectAdvance:Wizard"], 216000); }
+                }
         }
         public override void Save(BinBuffer bb)
         {
-            base.Save(bb);
-            bb.Write(SkillPoints);
-            for (int i = 0; i < SkillsById.Length; i++)
-                bb.Write(SkillsById[i]);
-            bb.Write(initialized);
-            bb.Write(Hotkeys.Count);
-            foreach(var kvp in Hotkeys)
-            {
-                bb.Write(kvp.Key);
-                bb.Write((int)kvp.Value);
-            }
+                bb.Clear();
+                bb.Write(SkillPoints);
+                bb.Write(SkillLevel);
+                for (int i = 0; i < SkillsById.Length; i++)
+                {
+                    bb.Write(SkillsById[i]);
+                }
+                bb.Write(Hotkeys.Count);
+                foreach (var kvp in Hotkeys)
+                {
+                    bb.Write(kvp.Key);
+                    bb.Write((int)kvp.Value);
+                }
+            
         }
         #endregion
         public bool checkPreviousSkill(int i) 
         { 
             if(i > 0 && i < SkillsById.Length)
             {
-                return SkillsById[i - 1];
+                return SkillsById[i-1];
             }
             else
             return true;
@@ -100,8 +127,11 @@ namespace ProjectAdvance
             {
                 SkillsById[position] = true;
                 spendSkillPoint();
-                SkillLevel++;
             }
+        }
+        public void setCooldown(int position,int time,string texture,string name)
+        {
+            CManager.addCooldown(position, name, texture, time);
         }
         public void clearSkill(int position)
         {
@@ -115,6 +145,7 @@ namespace ProjectAdvance
             else
                 return false;
         }
+        
         Vector2 TeleportationPosition = new Vector2();
         bool CanTeleport = false;
         private void teleportationCheck()
@@ -163,9 +194,9 @@ namespace ProjectAdvance
    
         private void teleportPlayer()
         {
-            if (player.statMana > 20)
+            if (player.statMana > 50)
             {
-                player.statMana -= 20;
+                player.statMana -= 50;
                 Main.PlaySound(6);
                 TeleportationPosition.Y -= 10;
                 for (int i = 0; i < 25; i++)
@@ -181,120 +212,95 @@ namespace ProjectAdvance
         }
         public override void PostUpdate()
         {
+          
             CanUse = true;
             DispersionTimer++;
+        
 
             if(DispersionTimer>600)
             {
                 DispersionTimer = 0;
                 DispersionCount = 0;
             }
-            if (ArcaneBoltOnCooldown) {
-                ArcaneBoltCooldown++;
-                if(ArcaneBoltCooldown>600)
-                {
-                    ArcaneBoltCooldown = 0;
-                    ArcaneBoltOnCooldown = false;
-                }
-            }
+
             base.PreUpdate();
         }
-       
+
 
         public override void MidUpdate()
         {
-            
-            if (!initialized)
+            if (!TreeCleared && minterface.isInitialized())
             {
-                initialize();
-                initialized=true;
+                minterface.updateMPlayer(this);
+                for (int i = 0; i < SkillsById.Length; i++)
+                {
+                    minterface.setupField(i, SkillsById[i]);
+                }
+                TreeCleared = true;
             }
             base.PostUpdate();
-            if (CanUse && player==Main.localPlayer)
+            if (CanUse && player == Main.localPlayer)
             {
-                if (SkillsById[3])
+                if (SkillsById[3] && (Hotkeys.ContainsKey(3)))
                 {
-                    if (Hotkeys.ContainsKey(3))
-                    {
                         if (Main.GetKeyState((int)Hotkeys[3]) == -127 || Main.GetKeyState((int)Hotkeys[3]) == -128) teleportationCheck();
                         if ((Main.mouseRight && Main.mouseRightRelease) && CanTeleport == true) teleportPlayer();
-                    }
                 }
 
                 if (SkillsById[2])
                 {
-                    if (player.HasBuff(BuffDef.byName["ProjectAdvance:PowerSurge"]) == 0)
+                    if (player.HasBuff(BuffDef.byName["ProjectAdvance:PowerSurge"]) != -1)
                     {
                         SurgeTimer = 0;
+                        
                     }
                     else
+                    {
+                        CManager.useSkill(2);
                         SurgeTimer++;
+                    }
                     if (SurgeTimer > 360)
                     {
+                        
                         player.AddBuff(BuffDef.byName["ProjectAdvance:PowerSurge"], 6000);
                     }
                 }
-                if (SkillsById[4])
+                if (SkillsById[4] && Hotkeys.ContainsKey(4) && (Hotkeys[4] != null) && ((Main.GetKeyState((int)Hotkeys[4]) == -127 || Main.GetKeyState((int)Hotkeys[4]) == -128)))
                 {
-                    if (Hotkeys.ContainsKey(4))
-                    {
-                        if (Hotkeys[4] != null)
-                        {
-                            if ((Main.GetKeyState((int)Hotkeys[4]) == -127 || Main.GetKeyState((int)Hotkeys[4]) == -128))
-                            {
                                 manaBlast(Main.localPlayer);
-                            }
-
-                        }
-                    }
                 }
-                if(SkillsById[5])
+                if (SkillsById[5] && Hotkeys.ContainsKey(5) && Hotkeys[5] != null && ((Main.GetKeyState((int)Hotkeys[5]) == -127 || Main.GetKeyState((int)Hotkeys[5]) == -128) && player.statMana >= 60))
                 {
-                    if (Hotkeys.ContainsKey(5))
-                    {
-                        if (Hotkeys[5] != null)
-                        {
-                            if ((Main.GetKeyState((int)Hotkeys[5]) == -127 || Main.GetKeyState((int)Hotkeys[5]) == -128) && player.statMana>=60)
-                            {
                                 if (player.HasBuff(BuffDef.byName["ProjectAdvance:DispersionBuff"]) == -1)
                                 {
                                     player.statMana -= 60;
                                     player.AddBuff(BuffDef.byName["ProjectAdvance:DispersionBuff"], 60);
-                                    if(DispersionCount++>3)
+                                    
+                                    if (DispersionCount++ > 3)
                                         player.AddBuff(BuffDef.byName["ProjectAdvance:ManaBreak"], 180);
-
                                 }
-                            }
+                }
+                if (SkillsById[6] && Hotkeys.ContainsKey(6) && Hotkeys[6] != null && ((Main.GetKeyState((int)Hotkeys[6]) == -127 || Main.GetKeyState((int)Hotkeys[6]) == -128) && player.statMana >= 60) && (CManager.isUsable(6)))
+                {
 
+                    int counter = 0;
+                    foreach (NPC n in Main.npc)
+                    {
+                        if (!n.friendly && n.active && Vector2.Distance(player.position, n.position) < 1800)
+                        {
+                            counter++;
+                            Main.projectile[Projectile.NewProjectile(player.position, new Vector2(0.3f * Main.rand.Next(-3, 3), -0.3f * Main.rand.Next(3)), ProjDef.byName["ProjectAdvance:ArcaneBolt"].type, 50, 1, player.whoAmI)].GetSubClass<Projectiles.ArcaneBolt>().setTarget(n);
+                        }
+                        if (counter > 0)
+                        {
+                            CManager.useSkill(6);
                         }
                     }
                 }
-                if(SkillsById[6])
+                if (SkillsById[7] && Hotkeys.ContainsKey(7) && Hotkeys[7] != null && ((Main.GetKeyState((int)Hotkeys[7]) == -127 || Main.GetKeyState((int)Hotkeys[7]) == -128) ) && (CManager.isUsable(7)))
                 {
-                    if(Hotkeys.ContainsKey(6))
-                    {
-                        if(Hotkeys[6]!=null)
-                        {
-                            if ((Main.GetKeyState((int)Hotkeys[6]) == -127 || Main.GetKeyState((int)Hotkeys[6]) == -128) && player.statMana >= 60)
-                            {
-                                if (!ArcaneBoltOnCooldown)
-                                {
-                                    int counter = 0;
-                                    foreach (NPC n in Main.npc)
-                                    {
-
-                                        if (!n.friendly && n.active && Vector2.Distance(player.position, n.position) < 1800)
-                                        {
-                                            counter++;
-                                            Main.projectile[Projectile.NewProjectile(player.position, new Vector2(0.3f * Main.rand.Next(-3, 3), -0.3f * Main.rand.Next(3)), ProjDef.byName["ProjectAdvance:ArcaneBolt"].type, 50, 1, player.whoAmI)].GetSubClass<Projectiles.ArcaneBolt>().setTarget(n);
-                                        }
-                                        if(counter>0)
-                                        ArcaneBoltOnCooldown = true;
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    CManager.useSkill(7);
+                    player.AddBuff(BuffDef.byName["ProjectAdvance:SageMode"], 600);
                 }
             }
         }
@@ -310,13 +316,17 @@ namespace ProjectAdvance
         }
         public override void ModifyDrawLayerList(List<PlayerLayer> list)
         {
-            if (player.HasBuff(BuffDef.byName["ProjectAdvance:DispersionBuff"]) == 1)
+            if (player.HasBuff(BuffDef.byName["ProjectAdvance:DispersionBuff"]) != -1)
             {
 
                 foreach (PlayerLayer p in list)
                     p.visible = false;
             }
             base.ModifyDrawLayerList(list);
+        }
+        public override void PreUpdate()
+        {
+            base.PreUpdate();
         }
     }
 }

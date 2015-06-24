@@ -33,7 +33,9 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Buffs\SageMode.json" />
     <None Include="Buffs\DispersionBuff.json" />
+    <None Include="Buffs\Wizard.json" />
     <None Include="Buffs\ManaBreak.json" />
     <None Include="Buffs\Absorption.json" />
     <None Include="Buffs\PowerSurge.json" />
@@ -63,10 +65,15 @@
     <Compile Include="Buffs\ManaBreak.cs" />
     <Compile Include="Buffs\Absorption.cs" />
     <Compile Include="Buffs\PowerSurge.cs" />
-    <Compile Include="Cooldown.cs" />
+    <Compile Include="Buffs\SageMode.cs" />
+    <Compile Include="Buffs\Wizard.cs" />
+    <Compile Include="CooldownManager.cs" />
+    <Compile Include="CooldownItem.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="Items\PrimeElement.cs" />
+    <Compile Include="SuperModsBase.cs" />
     <Compile Include="MInterface.cs" />
+    <Compile Include="MNPC.cs" />
     <Compile Include="MPlayer.cs" />
     <Compile Include="Projectiles\ArcaneBolt.cs" />
     <Compile Include="Projectiles\ManaWhirl.cs" />
@@ -79,6 +86,8 @@
     <Content Include="Buffs\DispersionBuff.png" />
     <Content Include="Buffs\ManaBreak.png" />
     <Content Include="Buffs\PowerSurge.png" />
+    <Content Include="Buffs\SageMode.png" />
+    <Content Include="Buffs\Wizard.png" />
     <Content Include="Gores\1x1.png" />
     <Content Include="Gores\ArcaneBarrage.png" />
     <Content Include="Gores\Blink.png" />
@@ -88,6 +97,7 @@
     <Content Include="Gores\ManaShield.png" />
     <Content Include="Gores\PlaceholderFrame.png" />
     <Content Include="Gores\PowerSurge.png" />
+    <Content Include="Gores\SageMode.png" />
     <Content Include="Gores\ToggleElement0.png" />
     <Content Include="Gores\ToggleElement1.png" />
     <Content Include="Items\PrimeElement.png" />

@@ -26,6 +26,7 @@ namespace ProjectAdvance.Projectiles
             {
                 if (target.position.X > projectile.position.X)
                     projectile.velocity.X+=0.1f;
+                    
                 else
                     projectile.velocity.X-=0.1f;
                 if (Math.Abs(target.position.Y - projectile.position.Y) < 10) ;

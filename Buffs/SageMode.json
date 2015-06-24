@@ -1,0 +1,8 @@
+{
+	"displayName": "Sage Mode",
+	"tip": "Your magic power is unlimited!",
+	"debuff": true,
+	"vanityPet": false,
+	"lightPet": false,
+	"enchantment": false
+}

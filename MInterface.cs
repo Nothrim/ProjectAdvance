@@ -12,6 +12,25 @@ namespace ProjectAdvance
 {
     class MInterface : ModInterface
     {
+        public bool isInitialized() { return initialized; }
+        public void updateMPlayer(MPlayer m)
+        {
+           
+            tree.updateMPlayer(m);
+        }
+        public void setupField(int i,bool value)
+        {
+            if (tree != null)
+            {
+                SkillSlot temp = tree.getSkillAtPosition(i);
+                if (temp != null)
+                {
+                    temp.setChoosen(value);
+                }
+            }
+            else
+                Main.NewText("Tree=null");
+        }
         public static SkillTree ChoosenTree=null;
         SkillTree tree;      
         bool initialized = false;
