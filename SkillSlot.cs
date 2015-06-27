@@ -17,6 +17,7 @@ namespace ProjectAdvance
         private Vector2 position;
         private readonly int STANDARD_SIZE=40;
         private String ImageName = "";
+        private String name="";
         Texture2D SkillImage;
         private Rectangle SkillSlotSurface;
 //mechanic variables-------------------------------------------
@@ -33,13 +34,18 @@ namespace ProjectAdvance
             this.ImageName = ImageName;
             SkillSlotSurface = new Rectangle((int)position.X, (int)position.Y, STANDARD_SIZE, STANDARD_SIZE);
             SkillImage = Main.goreTexture[GoreDef.gores[ImageName]];
+
          
             this.SkillId = SkillId;
         }
         public void updateMPlayer(MPlayer m) { player = m; }
-        public void setHotkey(Keys? hotkey) { Hotkey = hotkey; }
+        public void setHotkey(Keys? hotkey) 
+        {
+            Hotkey = hotkey; 
+        }
         public void setTooltip(String Tooltip) { this.Tooltip = Tooltip; }
         public void usable() { Usable = true; }
+        public bool isUsable() { return Usable; }
         public void setPosition(Vector2 position){
             this.position=position;
             SkillSlotSurface.X = (int)position.X;
@@ -49,6 +55,7 @@ namespace ProjectAdvance
         public void setTexture(string TexturePath) 
         { 
             ImageName = TexturePath;
+            name = ImageName.Split(':')[1];
             SkillImage = Main.goreTexture[GoreDef.gores[ImageName]];
         }
         public void setCooldownTimer(int time) { CooldownTimer = time; }
@@ -59,14 +66,28 @@ namespace ProjectAdvance
             {
                 player.player.mouseInterface = true;
                 player.cantUse();
-                if(Tooltip!="")
-                sb.DrawString(Main.fontMouseText, Tooltip, new Vector2(position.X, position.Y + STANDARD_SIZE+20), Color.LightGray);
+                if (Tooltip != "")
+                {
+                    sb.DrawString(Main.fontMouseText, name, new Vector2(position.X, position.Y + STANDARD_SIZE ), Color.Purple);
+                    sb.DrawString(Main.fontMouseText, Tooltip, new Vector2(position.X, position.Y + STANDARD_SIZE + 20), Color.LightGray);
+                }
                 if(Chosen && Usable && Keyboard.GetState().GetPressedKeys().Length>0)
                 {
+                    if(Keyboard.GetState().GetPressedKeys()[0]==Keys.Back)
+                    {
+
+                        //player.Hotkeys.Remove(getID());-didnt really work well with my save system
+                        player.Hotkeys[getID()] = Keys.Help; //something doesnt work? Hack the $@#% Ha! what fool has a help key Kappa ? :D
+                        Hotkey = null;
+                    }
+                    else
+                    {
                     if (player.Hotkeys.ContainsKey(getID())) player.Hotkeys[getID()] = Keyboard.GetState().GetPressedKeys()[0];
                     else 
                     player.Hotkeys.Add(getID(), Keyboard.GetState().GetPressedKeys()[0]);
                     Hotkey = Keyboard.GetState().GetPressedKeys()[0];
+                    }
+                    
                 }
                 if (SkillSlotSurface.Contains(Main.mouse) && Main.mouseLeft)
                 {
@@ -104,7 +125,7 @@ namespace ProjectAdvance
                     sb.Draw(SkillImage, SkillSlotSurface, Color.Gray);
             if (Usable)
             {
-                if (Hotkey != null)
+                if (Hotkey != null && Hotkey!=Keys.Help)//Hack it Kappa
                 {
                     sb.DrawString(Main.fontMouseText, Hotkey.ToString(), position, Color.LightYellow);
                 }

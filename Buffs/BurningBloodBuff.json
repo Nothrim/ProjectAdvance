@@ -1,0 +1,8 @@
+{
+	"displayName": "Burning Blood",
+	"tip": "Your energy flows faster and faster!",
+	"debuff": true,
+	"vanityPet": false,
+	"lightPet": false,
+	"enchantment": false
+}

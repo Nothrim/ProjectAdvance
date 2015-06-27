@@ -1,0 +1,15 @@
+﻿{
+	"displayName": "Fireball",
+	"size": [40, 20],
+	"aiStyle": 0,
+	"timeLeft": 500,
+	"friendly": true,
+	"hostile": false,	
+	"titleColide":true,
+	"damage": 1,
+	"ignoreWater": true,
+	"magic": true,
+	"frameCount": 5,
+	"noGravity": true, 
+	"penetrate": 3
+}

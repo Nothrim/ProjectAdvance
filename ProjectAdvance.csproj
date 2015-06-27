@@ -33,6 +33,9 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Buffs\BurningBloodBuff.json" />
+    <None Include="Buffs\BurningSoul.json" />
+    <None Include="Buffs\LightningFrom.json" />
     <None Include="Buffs\SageMode.json" />
     <None Include="Buffs\DispersionBuff.json" />
     <None Include="Buffs\Wizard.json" />
@@ -41,6 +44,9 @@
     <None Include="Buffs\PowerSurge.json" />
     <None Include="Items\PrimeElement.json" />
     <None Include="Projectiles\ArcaneBolt.json" />
+    <None Include="Projectiles\LightningForm.json" />
+    <None Include="Projectiles\FireballTrail.json" />
+    <None Include="Projectiles\FireballProjectile.json" />
     <None Include="Projectiles\ManaWhirl.json" />
   </ItemGroup>
   <ItemGroup>
@@ -61,16 +67,27 @@
     <Folder Include="Walls\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Buffs\BurningBloodBuff.cs" />
+    <Compile Include="Buffs\BurningSoul.cs" />
     <Compile Include="Buffs\DispersionBuff.cs" />
+    <Compile Include="Buffs\LightningForm.cs" />
     <Compile Include="Buffs\ManaBreak.cs" />
     <Compile Include="Buffs\Absorption.cs" />
     <Compile Include="Buffs\PowerSurge.cs" />
     <Compile Include="Buffs\SageMode.cs" />
     <Compile Include="Buffs\Wizard.cs" />
+    <Compile Include="Chooser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ChooserElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="CooldownManager.cs" />
     <Compile Include="CooldownItem.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="Items\PrimeElement.cs" />
+    <Compile Include="Projectiles\FireballProjectile.cs" />
+    <Compile Include="Projectiles\FireballTrail.cs" />
     <Compile Include="SuperModsBase.cs" />
     <Compile Include="MInterface.cs" />
     <Compile Include="MNPC.cs" />
@@ -83,7 +100,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Buffs\Absorption.png" />
+    <Content Include="Buffs\BurningBloodBuff.png" />
+    <Content Include="Buffs\BurningSoul.png" />
     <Content Include="Buffs\DispersionBuff.png" />
+    <Content Include="Buffs\LightningForm.png" />
+    <Content Include="Gores\Fireball.png" />
     <Content Include="Buffs\ManaBreak.png" />
     <Content Include="Buffs\PowerSurge.png" />
     <Content Include="Buffs\SageMode.png" />
@@ -91,17 +112,27 @@
     <Content Include="Gores\1x1.png" />
     <Content Include="Gores\ArcaneBarrage.png" />
     <Content Include="Gores\Blink.png" />
+    <Content Include="Gores\BurningBlood.png" />
+    <Content Include="Gores\BurningSoul.png" />
     <Content Include="Gores\Dispersion.png" />
+    <Content Include="Gores\Focus.png" />
+    <Content Include="Gores\LightningForm.png" />
+    <Content Include="Gores\MagePath.png" />
     <Content Include="Gores\MagicElement.png" />
     <Content Include="Gores\ManaBlast.png" />
     <Content Include="Gores\ManaShield.png" />
     <Content Include="Gores\PlaceholderFrame.png" />
     <Content Include="Gores\PowerSurge.png" />
+    <Content Include="Gores\RangePath.png" />
     <Content Include="Gores\SageMode.png" />
     <Content Include="Gores\ToggleElement0.png" />
     <Content Include="Gores\ToggleElement1.png" />
+    <Content Include="Gores\WarriorPath.png" />
     <Content Include="Items\PrimeElement.png" />
     <Content Include="Projectiles\ArcaneBolt.png" />
+    <Content Include="Projectiles\FireballProjectile.png" />
+    <Content Include="Projectiles\FireballTrail.png" />
+    <Content Include="Projectiles\LightningForm.png" />
     <Content Include="Projectiles\ManaWhirl.png" />
     <Content Include="Sounds\beep.wav" />
     <Content Include="Sounds\BigDrum.wav" />

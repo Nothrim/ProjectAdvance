@@ -86,6 +86,14 @@ namespace ProjectAdvance
             }
             return false;
         }
+        public int getTime(int id)
+        {
+            if(Cooldowns.ContainsKey(id))
+            {
+                return Cooldowns[id].getCooldownTimer();
+            }
+            return -1;
+        }
          
     }
 }

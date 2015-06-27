@@ -1,0 +1,14 @@
+﻿{
+	"displayName": "Lightning Form",
+	"size": [45, 27],
+	"aiStyle": 0,
+	"timeLeft": 60,
+	"friendly": true,
+	"hostile": false,	
+	"titleColide":false,
+	"damage": 1,
+	"ignoreWater": true,
+	"magic": true,
+	"noGravity": true, 
+	"frameCount":4
+}

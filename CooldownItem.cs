@@ -69,6 +69,7 @@ namespace ProjectAdvance
         }
         public void setActive(bool value) { active = value; }
         public bool isActive() { return active; }
+        public int getCooldownTimer() { return CooldownTimer; }
 
     }
 }

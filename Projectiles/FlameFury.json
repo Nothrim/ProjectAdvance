@@ -1,0 +1,12 @@
+﻿{
+	"displayName": "Flame Fury",
+	"size": [100, 20],
+	"aiStyle": 0,
+	"timeLeft": 300,
+	"friendly": true,
+	"hostile": false,
+	"damage": 1,
+	"magic": true,
+	"frameCount": 5,
+	"noGravity": false
+}

@@ -12,11 +12,18 @@ namespace ProjectAdvance
 {
     class MInterface : ModInterface
     {
+        MPlayer player = null;
+        bool PathChoosen = false;
+        bool ChooserInitialized = false;
         public bool isInitialized() { return initialized; }
         public void updateMPlayer(MPlayer m)
         {
-           
+            ChooserInitialized = false;
+            PathChoosen = false;
+            initialized = false;
+            player = m;
             tree.updateMPlayer(m);
+
         }
         public void setupField(int i,bool value)
         {
@@ -32,7 +39,8 @@ namespace ProjectAdvance
                 Main.NewText("Tree=null");
         }
         public static SkillTree ChoosenTree=null;
-        SkillTree tree;      
+        SkillTree tree;
+        Chooser ChPath;
         bool initialized = false;
         void Initialize(SpriteBatch sb)
         {
@@ -44,7 +52,31 @@ namespace ProjectAdvance
         public override bool PreDrawInterface(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
         {
             if (!initialized) Initialize(sb);
-            tree.drawTree();
+            if (player != null)
+            {
+                if (player.getPath() > 0)
+                {
+                    if (!PathChoosen)
+                    {
+                        tree.loadSlotsData();
+                        PathChoosen = true;
+                    }
+                    tree.drawTree();
+                }
+                else
+                {
+                    if(!ChooserInitialized)
+                    {
+                        ChPath = new Chooser(sb, player);
+                        ChPath.addElement(new Vector2((Main.screenWidth / 2) - 80, Main.screenHeight / 2), "ProjectAdvance:WarriorPath", 1,"Warrior");
+                        ChPath.addElement(new Vector2((Main.screenWidth / 2) , Main.screenHeight / 2), "ProjectAdvance:MagePath", 2,"Mage");
+                        ChPath.addElement(new Vector2((Main.screenWidth / 2) + 80, Main.screenHeight / 2), "ProjectAdvance:RangePath", 3,"Ranged");
+                        ChooserInitialized = true;
+                    }
+                    ChPath.draw();
+                }
+            }
+           
             return base.PreDrawInterface(sb);
         }
     }

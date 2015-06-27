@@ -1,0 +1,8 @@
+{
+	"displayName": "Burning Soul",
+	"tip": "You are about to burst!",
+	"debuff": true,
+	"vanityPet": false,
+	"lightPet": false,
+	"enchantment": false
+}

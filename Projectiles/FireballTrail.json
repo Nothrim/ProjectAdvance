@@ -1,0 +1,15 @@
+﻿{
+	"displayName": "Fireball Trail",
+	"size": [15, 7],
+	"aiStyle": 0,
+	"timeLeft": 80,
+	"friendly": true,
+	"hostile": false,	
+	"titleColide":false,
+	"damage": 1,
+	"ignoreWater": true,
+	"magic": true,
+	"frameCount": 3,
+	"noGravity": true, 
+	"penetrate": 5
+}
