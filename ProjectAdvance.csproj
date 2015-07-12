@@ -35,7 +35,15 @@
     <None Include="App.config" />
     <None Include="Buffs\BurningBloodBuff.json" />
     <None Include="Buffs\BurningSoul.json" />
-    <None Include="Buffs\LightningFrom.json" />
+    <None Include="Buffs\Blocking.json" />
+    <None Include="Buffs\TrollRegeneration.json" />
+    <None Include="Buffs\LayerIII.json" />
+    <None Include="Buffs\LayerII.json" />
+    <None Include="Buffs\LayerI.json" />
+    <None Include="Buffs\HellJester.json" />
+    <None Include="Buffs\EarthenShell.json" />
+    <None Include="Buffs\LightningForm.json" />
+    <None Include="Buffs\Root.json" />
     <None Include="Buffs\SageMode.json" />
     <None Include="Buffs\DispersionBuff.json" />
     <None Include="Buffs\Wizard.json" />
@@ -43,21 +51,23 @@
     <None Include="Buffs\Absorption.json" />
     <None Include="Buffs\PowerSurge.json" />
     <None Include="Items\PrimeElement.json" />
+    <None Include="Projectiles\HeallingDummy.json" />
+    <None Include="Projectiles\PoisonSerpent.json" />
     <None Include="Projectiles\ArcaneBolt.json" />
-    <None Include="Projectiles\LightningForm.json" />
     <None Include="Projectiles\FireballTrail.json" />
+    <None Include="Projectiles\FlameFury.json" />
+    <None Include="Projectiles\LightningForm.json" />
+    <None Include="Projectiles\BindingRoot.json" />
     <None Include="Projectiles\FireballProjectile.json" />
+    <None Include="Projectiles\RootZone.json" />
     <None Include="Projectiles\ManaWhirl.json" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="System" />
-    <Reference Include="tAPI">
-      <HintPath>D:\Steam\SteamApps\common\terraria\tAPI.exe</HintPath>
-    </Reference>
-    <Reference Include="Terraria">
-      <HintPath>D:\Steam\SteamApps\common\Terraria\Terraria.exe</HintPath>
+    <Reference Include="tAPI Core">
+      <HintPath>D:\Steam\SteamApps\common\MTerraria\tAPI Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -67,14 +77,22 @@
     <Folder Include="Walls\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Buffs\Blocking.cs" />
     <Compile Include="Buffs\BurningBloodBuff.cs" />
     <Compile Include="Buffs\BurningSoul.cs" />
     <Compile Include="Buffs\DispersionBuff.cs" />
+    <Compile Include="Buffs\EarthenShell.cs" />
+    <Compile Include="Buffs\LayerIII.cs" />
+    <Compile Include="Buffs\LayerII.cs" />
+    <Compile Include="Buffs\LayerI.cs" />
     <Compile Include="Buffs\LightningForm.cs" />
     <Compile Include="Buffs\ManaBreak.cs" />
     <Compile Include="Buffs\Absorption.cs" />
+    <Compile Include="Buffs\HellJester.cs" />
     <Compile Include="Buffs\PowerSurge.cs" />
+    <Compile Include="Buffs\Root.cs" />
     <Compile Include="Buffs\SageMode.cs" />
+    <Compile Include="Buffs\TrollRegeneration.cs" />
     <Compile Include="Buffs\Wizard.cs" />
     <Compile Include="Chooser.cs">
       <SubType>Code</SubType>
@@ -86,8 +104,15 @@
     <Compile Include="CooldownItem.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="Items\PrimeElement.cs" />
+    <Compile Include="MProjectile.cs" />
+    <Compile Include="Projectiles\HeallingDummy.cs" />
+    <Compile Include="Projectiles\PoisonSerpent.cs" />
     <Compile Include="Projectiles\FireballProjectile.cs" />
+    <Compile Include="Projectiles\BindingRoot.cs" />
     <Compile Include="Projectiles\FireballTrail.cs" />
+    <Compile Include="Projectiles\FlameFury.cs" />
+    <Compile Include="Projectiles\LightningForm.cs" />
+    <Compile Include="Projectiles\RootZone.cs" />
     <Compile Include="SuperModsBase.cs" />
     <Compile Include="MInterface.cs" />
     <Compile Include="MNPC.cs" />
@@ -100,10 +125,23 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Buffs\Absorption.png" />
+    <Content Include="Buffs\Blocking.png" />
     <Content Include="Buffs\BurningBloodBuff.png" />
     <Content Include="Buffs\BurningSoul.png" />
     <Content Include="Buffs\DispersionBuff.png" />
+    <Content Include="Buffs\EarthenShell.png" />
+    <Content Include="Buffs\HellJester.png" />
+    <Content Include="Buffs\LayerI.png" />
+    <Content Include="Buffs\LayerII.png" />
+    <Content Include="Buffs\LayerIII.png" />
     <Content Include="Buffs\LightningForm.png" />
+    <Content Include="Buffs\Root.png" />
+    <Content Include="Buffs\Thrown.png" />
+    <Content Include="Buffs\TrollRegeneration.png" />
+    <Content Include="Gores\Block.png" />
+    <Content Include="Gores\BlockEffect.png" />
+    <Content Include="Gores\Dig.png" />
+    <Content Include="Gores\EarthenShell.png" />
     <Content Include="Gores\Fireball.png" />
     <Content Include="Buffs\ManaBreak.png" />
     <Content Include="Buffs\PowerSurge.png" />
@@ -115,27 +153,44 @@
     <Content Include="Gores\BurningBlood.png" />
     <Content Include="Gores\BurningSoul.png" />
     <Content Include="Gores\Dispersion.png" />
+    <Content Include="Gores\FlameFury.png" />
     <Content Include="Gores\Focus.png" />
+    <Content Include="Gores\ForceOfNature.png" />
+    <Content Include="Gores\HellJester.png" />
+    <Content Include="Gores\LayeredArmor.png" />
     <Content Include="Gores\LightningForm.png" />
     <Content Include="Gores\MagePath.png" />
     <Content Include="Gores\MagicElement.png" />
     <Content Include="Gores\ManaBlast.png" />
     <Content Include="Gores\ManaShield.png" />
+    <Content Include="Gores\MirrorShield.png" />
+    <Content Include="Gores\NatureProtection.png" />
     <Content Include="Gores\PlaceholderFrame.png" />
+    <Content Include="Gores\PoisonZone.png" />
     <Content Include="Gores\PowerSurge.png" />
     <Content Include="Gores\RangePath.png" />
+    <Content Include="Gores\Roots.png" />
     <Content Include="Gores\SageMode.png" />
+    <Content Include="Gores\ThornSword.png" />
+    <Content Include="Gores\Throw.png" />
     <Content Include="Gores\ToggleElement0.png" />
     <Content Include="Gores\ToggleElement1.png" />
+    <Content Include="Gores\TrollsBlood.png" />
     <Content Include="Gores\WarriorPath.png" />
     <Content Include="Items\PrimeElement.png" />
     <Content Include="Projectiles\ArcaneBolt.png" />
+    <Content Include="Projectiles\BindingRoot.png" />
     <Content Include="Projectiles\FireballProjectile.png" />
     <Content Include="Projectiles\FireballTrail.png" />
+    <Content Include="Projectiles\FlameFury.png" />
+    <Content Include="Projectiles\HeallingDummy.png" />
     <Content Include="Projectiles\LightningForm.png" />
     <Content Include="Projectiles\ManaWhirl.png" />
+    <Content Include="Projectiles\PoisonSerpent.png" />
+    <Content Include="Projectiles\RootZone.png" />
     <Content Include="Sounds\beep.wav" />
     <Content Include="Sounds\BigDrum.wav" />
+    <Content Include="Sounds\Parry.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

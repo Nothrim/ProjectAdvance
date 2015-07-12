@@ -1,0 +1,8 @@
+{
+	"displayName": "Root",
+	"tip": "Bound to place",
+	"debuff": true,
+	"vanityPet": false,
+	"lightPet": false,
+	"enchantment": false
+}

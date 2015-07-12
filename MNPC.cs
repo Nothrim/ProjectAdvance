@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using TAPI;
+using Microsoft.Xna.Framework;
 
 namespace ProjectAdvance
 {
@@ -22,6 +23,15 @@ namespace ProjectAdvance
             }
             base.NPCLoot();
  	        base.PostNPCLoot();
+        }
+        public override void DealtPlayer(Player player, int hitDir, int dmgDealt, bool crit)
+        {
+            if(player.GetSubClass<MPlayer>().isBlocking() && npc.aiStyle==9)
+            {
+                npc.friendly = true;
+                npc.velocity=Vector2.Multiply(npc.velocity, -1);
+            }
+            base.DealtPlayer(player, hitDir, dmgDealt, crit);
         }
             
 

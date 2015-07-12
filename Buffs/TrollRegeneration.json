@@ -1,0 +1,9 @@
+{
+	"displayName": "Troll Regeneration",
+	"tip": "Quickly recovers HP",
+	"debuff": true,
+	"vanityPet": false,
+	"lightPet": false,
+	"noTimer":true,
+	"enchantment": false
+}

@@ -1,0 +1,14 @@
+﻿{
+	"displayName": "Binding Root",
+	"size": [100, 10],
+	"aiStyle": 0,
+	"timeLeft": 31,
+	"friendly": true,
+	"hostile": false,	
+	"titleColide":false,
+	"damage": 1,
+	"ignoreWater": true,
+	"magic": true,
+	"noGravity": true, 
+	"penetrate": 300
+}

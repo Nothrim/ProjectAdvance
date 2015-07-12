@@ -1,0 +1,9 @@
+{
+	"displayName": "Armor II",
+	"tip": "+10 defense",
+	"debuff": true,
+	"vanityPet": false,
+	"lightPet": false,
+		"noTimer":true,
+	"enchantment": false
+}

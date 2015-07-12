@@ -63,6 +63,33 @@ namespace ProjectAdvance
         }
         public void loadSlotsData()
         {
+            if (ModPlayer.getPath() == 1)
+            {
+                Tree[0].setTexture("ProjectAdvance:MagicElement");
+                Tree[0].setTooltip("Grants various attributes required for begginer mages");
+                Tree[1].setTexture("ProjectAdvance:LayeredArmor");
+                Tree[1].setTooltip("Gain armor layers when not fighting I:(Always On)+5 Armor,II:+10 armor,III:+15 armor");
+                Tree[2].setTexture("ProjectAdvance:Block");
+                Tree[2].setTooltip("Block incoming damage [10% chance]");
+                Tree[3].setTexture("ProjectAdvance:TrollsBlood");
+                Tree[3].setTooltip("Provides hastened regeneration when in danger [1 minute cooldown]");
+                Tree[3].setCooldownTimer(3600);
+                Tree[4].setTexture("ProjectAdvance:MirrorShield");
+                Tree[4].setTooltip("Parry incoming hits/projectiles[5 sec cooldown]");
+                Tree[4].setCooldownTimer(300);
+                Tree[4].usable();
+                Tree[5].setTexture("ProjectAdvance:Throw");
+                Tree[5].setTooltip("Throw closest enemy to mouse direction");
+                Tree[5].usable();
+                Tree[5].setCooldownTimer(300);
+                foreach (KeyValuePair<int, Keys?> kvp in ModPlayer.Hotkeys)
+                {
+                    if (Tree[kvp.Key].isUsable())
+                        Tree[kvp.Key].setHotkey(kvp.Value);
+                    else
+                        ModPlayer.Hotkeys.Remove(kvp.Key);
+                }
+            }
             if (ModPlayer.getPath() == 2)
             {
                 Tree[0].setTexture("ProjectAdvance:MagicElement");
@@ -110,6 +137,31 @@ namespace ProjectAdvance
                 Tree[14].setTooltip("100% Critical chance for 10 sec[5 minute cooldown]");
                 Tree[14].usable();
                 Tree[14].setCooldownTimer(18000);
+                Tree[15].setTexture("ProjectAdvance:EarthenShell");
+                Tree[15].setTooltip("Gain bonus in defence for standing still");
+                Tree[16].setTexture("ProjectAdvance:NatureProtection");
+                Tree[16].setTooltip("Force of nature protect you from dying [8 minutes cooldown]");
+                Tree[16].setCooldownTimer(28800);
+                Tree[17].setTexture("ProjectAdvance:Roots");
+                Tree[17].setTooltip("Bind enemies in targeted area to one place");
+                Tree[17].usable();
+                Tree[17].setCooldownTimer(600);
+                Tree[18].setTexture("ProjectAdvance:Dig");
+                Tree[18].setTooltip("Use your mana to dig stone or dirt arround mouse");
+                Tree[18].usable();
+                Tree[18].setCooldownTimer(10);
+                Tree[19].setTexture("ProjectAdvance:ThornSword");
+                Tree[19].setTooltip("Slash your enemies with force of nature!");
+                Tree[19].usable();
+                Tree[19].setCooldownTimer(5);
+                Tree[20].setTexture("ProjectAdvance:PoisonZone");
+                Tree[20].setTooltip("Change your surroundings into deadly zone [50 mana][15 sec cooldown]");
+                Tree[20].usable();
+                Tree[20].setCooldownTimer(900);
+                Tree[21].setTexture("ProjectAdvance:ForceOfNature");
+                Tree[21].setTooltip("Bouncing projectile, heal your allies and hurt your foes![150 mana][30 sec cooldown] ");
+                Tree[21].usable();
+                Tree[21].setCooldownTimer(1800);
 
                 foreach (KeyValuePair<int, Keys?> kvp in ModPlayer.Hotkeys)
                 {

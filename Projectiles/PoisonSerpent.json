@@ -1,0 +1,14 @@
+﻿{
+	"displayName": "Poison Serpent",
+	"size": [5, 5],
+	"aiStyle": 0,
+	"timeLeft": 600,
+	"friendly": true,
+	"hostile": false,	
+	"titleColide":false,
+	"damage": 1,
+	"ignoreWater": true,
+	"magic": true,
+	"noGravity": true, 
+	"penetrate": 3
+}
