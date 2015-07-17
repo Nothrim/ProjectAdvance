@@ -1,0 +1,14 @@
+﻿{
+	"displayName": "Pressure Bolt",
+	"size": [40, 40],
+	"aiStyle": 0,
+	"timeLeft": 100,
+	"friendly": true,
+	"hostile": false,	
+	"titleColide":false,
+	"damage": 1,
+	"ignoreWater": true,
+	"magic": false,
+	"noGravity": true, 
+	"penetrate": 3
+}

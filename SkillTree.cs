@@ -65,8 +65,8 @@ namespace ProjectAdvance
         {
             if (ModPlayer.getPath() == 1)
             {
-                Tree[0].setTexture("ProjectAdvance:MagicElement");
-                Tree[0].setTooltip("Grants various attributes required for begginer mages");
+                Tree[0].setTexture("ProjectAdvance:Might!");
+                Tree[0].setTooltip("10% increased damage with melee hits");
                 Tree[1].setTexture("ProjectAdvance:LayeredArmor");
                 Tree[1].setTooltip("Gain armor layers when not fighting I:(Always On)+5 Armor,II:+10 armor,III:+15 armor");
                 Tree[2].setTexture("ProjectAdvance:Block");
@@ -82,6 +82,57 @@ namespace ProjectAdvance
                 Tree[5].setTooltip("Throw closest enemy to mouse direction");
                 Tree[5].usable();
                 Tree[5].setCooldownTimer(300);
+                Tree[6].setTexture("ProjectAdvance:Shockwave");
+                Tree[6].setTooltip("Shoot 2 projectiles in both directions, which deal damage equal to your current health[5 sec cooldown]");
+                Tree[6].usable();
+                Tree[6].setCooldownTimer(300);
+                Tree[7].setTexture("ProjectAdvance:EnderLegacy");
+                Tree[7].setTooltip("Recived damage heals you[2 minute cooldown]");
+                Tree[7].usable();
+                Tree[7].setCooldownTimer(7200);
+                Tree[8].setTexture("ProjectAdvance:Berserk");
+                Tree[8].setTooltip("Your damage increases in percetage to losen life -1%life=+1%dmg [need 75% hp or less to work]");
+                Tree[9].setTexture("ProjectAdvance:Unbreakable");
+                Tree[9].setTooltip("Lower hp-higher resistance [max 30% dmg resistance if < 50% hp]");
+                Tree[10].setTexture("ProjectAdvance:ExplodingCorpses");
+                Tree[10].setTooltip("Cause explosion on enemy kill[25% chance]");
+                Tree[11].setTexture("ProjectAdvance:Cleave");
+                Tree[11].setTooltip("Deal 15% of the damage to other enemies on screen");
+                Tree[12].setTexture("ProjectAdvance:Swipe");
+                Tree[12].setTooltip("Swing your weapon like a hurricane[5 sec cooldown]");
+                Tree[12].usable();
+                Tree[12].setCooldownTimer(300);
+                Tree[13].setTexture("ProjectAdvance:BloodRite");
+                Tree[13].setTooltip("Drain enemy lifeforce on hit-10% of damage dealt heals you[1 minute cooldown]");
+                Tree[13].usable();
+                Tree[13].setCooldownTimer(3600);
+                Tree[14].setTexture("ProjectAdvance:OverwhelmingPressure");
+                Tree[14].setTooltip("Your hits create powerfull bolts of pressured air [1 minute cooldown]");
+                Tree[14].usable();
+                Tree[14].setCooldownTimer(3600);
+                Tree[15].setTexture("ProjectAdvance:EnergySteal");
+                Tree[15].setTooltip("10% of damage dealt becomes your mana");
+                Tree[16].setTexture("ProjectAdvance:MirageSlash");
+                Tree[16].setTooltip("Charge your power into deadly blast![3 sec cooldown]");
+                Tree[16].usable();
+                Tree[16].setCooldownTimer(180);
+                Tree[17].setTexture("ProjectAdvance:Barrier");
+                Tree[17].setTooltip("Barrier of energy protects you [1 minute cooldown] after shattering");
+                Tree[17].setCooldownTimer(3600);
+                Tree[18].setTexture("ProjectAdvance:Perfection");
+                Tree[18].setTooltip("Mirage slash cooldown:2 sec , Mirrage slash damage:+25%, +50% melee hit CritDamage");
+                Tree[19].setTexture("ProjectAdvance:Shadowstep");
+                Tree[19].setTooltip("Appear behind pointed enemy ,dealing sneaky strike [20 mana]");
+                Tree[19].usable();
+                Tree[19].setCooldownTimer(30);
+                Tree[20].setTexture("ProjectAdvance:Slash");
+                Tree[20].setTooltip("Slash technique from an Ancient times [3 sec cooldown]");
+                Tree[20].usable();
+                Tree[20].setCooldownTimer(180);
+                Tree[21].setTexture("ProjectAdvance:ThreeThousandCuts");
+                Tree[21].setTooltip("Removes Cooldown from slash skill for 10 sec [2 minutes cooldown]");
+                Tree[21].usable();
+                Tree[21].setCooldownTimer(7200);
                 foreach (KeyValuePair<int, Keys?> kvp in ModPlayer.Hotkeys)
                 {
                     if (Tree[kvp.Key].isUsable())

@@ -1,6 +1,6 @@
 {
-	"displayName": "Blocking",
-	"tip": "Returning all incoming damage",
+	"displayName": "ThreeThousandCuts",
+	"tip": "Slash! Slash! Slash!",
 	"debuff": true,
 	"vanityPet": false,
 	"lightPet": false,

@@ -24,6 +24,7 @@ namespace ProjectAdvance
         Vector2 TextPosition;
         bool active = true;
         public static void addSpriteBatch(SpriteBatch sprite_batch){ sb = sprite_batch;}
+        public void setCooldown(int cd) { cooldown = cd; }
         public CooldownItem(int id, string name, string texture_name, int cooldown, Vector2 position) 
         {
             this.id = id;

@@ -1,0 +1,13 @@
+﻿{
+	"displayName": "Throw Dummy",
+	"size": [100, 100],
+	"aiStyle": 0,
+	"timeLeft": 900,
+	"friendly": true,
+	"hostile": false,	
+	"titleColide":false,
+	"damage": 1,
+	"ignoreWater": true,
+	"noGravity": true, 
+	"penetrate": 200
+}

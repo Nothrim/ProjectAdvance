@@ -68,12 +68,12 @@ namespace ProjectAdvance
                 player.cantUse();
                 if (Tooltip != "")
                 {
-                    sb.DrawString(Main.fontMouseText, name, new Vector2(position.X, position.Y + STANDARD_SIZE ), Color.Purple);
+                    sb.DrawString(Main.fontMouseText, name, new Vector2(position.X, position.Y + STANDARD_SIZE), Color.Purple);
                     sb.DrawString(Main.fontMouseText, Tooltip, new Vector2(position.X, position.Y + STANDARD_SIZE + 20), Color.LightGray);
                 }
-                if(Chosen && Usable && Keyboard.GetState().GetPressedKeys().Length>0)
+                if (Chosen && Usable && Keyboard.GetState().GetPressedKeys().Length > 0)
                 {
-                    if(Keyboard.GetState().GetPressedKeys()[0]==Keys.Back)
+                    if (Keyboard.GetState().GetPressedKeys()[0] == Keys.Back)
                     {
 
                         //player.Hotkeys.Remove(getID());-didnt really work well with my save system
@@ -82,12 +82,12 @@ namespace ProjectAdvance
                     }
                     else
                     {
-                    if (player.Hotkeys.ContainsKey(getID())) player.Hotkeys[getID()] = Keyboard.GetState().GetPressedKeys()[0];
-                    else 
-                    player.Hotkeys.Add(getID(), Keyboard.GetState().GetPressedKeys()[0]);
-                    Hotkey = Keyboard.GetState().GetPressedKeys()[0];
+                        if (player.Hotkeys.ContainsKey(getID())) player.Hotkeys[getID()] = Keyboard.GetState().GetPressedKeys()[0];
+                        else
+                            player.Hotkeys.Add(getID(), Keyboard.GetState().GetPressedKeys()[0]);
+                        Hotkey = Keyboard.GetState().GetPressedKeys()[0];
                     }
-                    
+
                 }
                 if (SkillSlotSurface.Contains(Main.mouse) && Main.mouseLeft)
                 {
@@ -96,10 +96,10 @@ namespace ProjectAdvance
                     {
                         if (!Chosen)
                         {
-                            if (player.checkPreviousSkill(getID()) && player.getSkillPoints()>0)
+                            if (player.checkPreviousSkill(getID()) && player.getSkillPoints() > 0)
                             {
                                 player.setSkill(getID());
-                                if(CooldownTimer!=0)
+                                if (CooldownTimer != 0)
                                 {
                                     player.setCooldown(getID(), CooldownTimer, ImageName, ImageName);
                                 }
@@ -117,12 +117,15 @@ namespace ProjectAdvance
                 else
                     sb.Draw(SkillImage, SkillSlotSurface, Color.Orange);
             }
-               
+
             else
-                if (Chosen) 
+            {
+                if (Chosen)
                     sb.Draw(SkillImage, SkillSlotSurface, Color.White);
                 else
                     sb.Draw(SkillImage, SkillSlotSurface, Color.Gray);
+
+            }
             if (Usable)
             {
                 if (Hotkey != null && Hotkey!=Keys.Help)//Hack it Kappa
@@ -130,7 +133,7 @@ namespace ProjectAdvance
                     sb.DrawString(Main.fontMouseText, Hotkey.ToString(), position, Color.LightYellow);
                 }
                 else
-                    sb.DrawString(Main.fontMouseText, "-", new Vector2(position.X,position.Y+STANDARD_SIZE), Color.LightYellow);
+                    sb.DrawString(Main.fontMouseText, "-", position, Color.LightYellow);
             }
         }
 

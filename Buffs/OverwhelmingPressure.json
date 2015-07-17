@@ -1,0 +1,9 @@
+{
+	"displayName": "Overwhelming Pressure",
+	"tip": "You can strike everything!",
+	"debuff": true,
+	"vanityPet": false,
+	"lightPet": false,
+	"enchantment": false,
+	"noTimer": true
+}

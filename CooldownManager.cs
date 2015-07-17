@@ -25,6 +25,11 @@ namespace ProjectAdvance
                 Cooldowns.Add(id, new CooldownItem(id, name, texture, cooldown_time, new Vector2(anchor.X, anchor.Y + Cooldowns.Count * 17)));
             }
         }
+        public void setCooldown(int id,int time)
+        {
+            if (Cooldowns.ContainsKey(id))
+                Cooldowns[id].setCooldown(time);
+        }
         public void draw() 
         {
             if (Cooldowns.Count > 0)
@@ -94,6 +99,7 @@ namespace ProjectAdvance
             }
             return -1;
         }
+        
          
     }
 }

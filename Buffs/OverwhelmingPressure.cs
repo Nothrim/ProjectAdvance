@@ -5,16 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using TAPI;
 using Terraria;
-
+using Microsoft.Xna.Framework;
 namespace ProjectAdvance.Buffs
 {
-    class Blocking : ModBuff
+    class OverwhelmingPressure : ModBuff
     {
-        public override void DealtPlayer(Player player, NPC npc, int hitDir, int dmgDealt, bool crit)
-        {
-            //not done
-
-        }
     }
-
 }

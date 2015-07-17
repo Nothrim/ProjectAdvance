@@ -33,9 +33,11 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Buffs\BloodRite.json" />
     <None Include="Buffs\BurningBloodBuff.json" />
     <None Include="Buffs\BurningSoul.json" />
-    <None Include="Buffs\Blocking.json" />
+    <None Include="Buffs\EnderLegacy.json" />
+    <None Include="Buffs\OverwhelmingPressure.json" />
     <None Include="Buffs\TrollRegeneration.json" />
     <None Include="Buffs\LayerIII.json" />
     <None Include="Buffs\LayerII.json" />
@@ -51,6 +53,12 @@
     <None Include="Buffs\Absorption.json" />
     <None Include="Buffs\PowerSurge.json" />
     <None Include="Items\PrimeElement.json" />
+    <None Include="Projectiles\Slash.json" />
+    <None Include="Projectiles\MirageSlash.json" />
+    <None Include="Projectiles\PressureBolt.json" />
+    <None Include="Projectiles\Shadow.json" />
+    <None Include="Projectiles\Shockwave.json" />
+    <None Include="Projectiles\ThrowDummy.json" />
     <None Include="Projectiles\HeallingDummy.json" />
     <None Include="Projectiles\PoisonSerpent.json" />
     <None Include="Projectiles\ArcaneBolt.json" />
@@ -77,11 +85,12 @@
     <Folder Include="Walls\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Buffs\Blocking.cs" />
+    <Compile Include="Buffs\BloodRite.cs" />
     <Compile Include="Buffs\BurningBloodBuff.cs" />
     <Compile Include="Buffs\BurningSoul.cs" />
     <Compile Include="Buffs\DispersionBuff.cs" />
     <Compile Include="Buffs\EarthenShell.cs" />
+    <Compile Include="Buffs\EnderLegacy.cs" />
     <Compile Include="Buffs\LayerIII.cs" />
     <Compile Include="Buffs\LayerII.cs" />
     <Compile Include="Buffs\LayerI.cs" />
@@ -89,6 +98,7 @@
     <Compile Include="Buffs\ManaBreak.cs" />
     <Compile Include="Buffs\Absorption.cs" />
     <Compile Include="Buffs\HellJester.cs" />
+    <Compile Include="Buffs\OverwhelmingPressure.cs" />
     <Compile Include="Buffs\PowerSurge.cs" />
     <Compile Include="Buffs\Root.cs" />
     <Compile Include="Buffs\SageMode.cs" />
@@ -106,13 +116,19 @@
     <Compile Include="Items\PrimeElement.cs" />
     <Compile Include="MProjectile.cs" />
     <Compile Include="Projectiles\HeallingDummy.cs" />
+    <Compile Include="Projectiles\MirageSlash.cs" />
     <Compile Include="Projectiles\PoisonSerpent.cs" />
     <Compile Include="Projectiles\FireballProjectile.cs" />
     <Compile Include="Projectiles\BindingRoot.cs" />
     <Compile Include="Projectiles\FireballTrail.cs" />
     <Compile Include="Projectiles\FlameFury.cs" />
     <Compile Include="Projectiles\LightningForm.cs" />
+    <Compile Include="Projectiles\PressureBolt.cs" />
     <Compile Include="Projectiles\RootZone.cs" />
+    <Compile Include="Projectiles\Shadow.cs" />
+    <Compile Include="Projectiles\Shockwave.cs" />
+    <Compile Include="Projectiles\Slash.cs" />
+    <Compile Include="Projectiles\ThrowDummy.cs" />
     <Compile Include="SuperModsBase.cs" />
     <Compile Include="MInterface.cs" />
     <Compile Include="MNPC.cs" />
@@ -125,23 +141,32 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Buffs\Absorption.png" />
-    <Content Include="Buffs\Blocking.png" />
+    <Content Include="Buffs\BloodRite.png" />
     <Content Include="Buffs\BurningBloodBuff.png" />
     <Content Include="Buffs\BurningSoul.png" />
     <Content Include="Buffs\DispersionBuff.png" />
     <Content Include="Buffs\EarthenShell.png" />
+    <Content Include="Buffs\EnderLegacy.png" />
     <Content Include="Buffs\HellJester.png" />
     <Content Include="Buffs\LayerI.png" />
     <Content Include="Buffs\LayerII.png" />
     <Content Include="Buffs\LayerIII.png" />
     <Content Include="Buffs\LightningForm.png" />
+    <Content Include="Buffs\OverwhelmingPressure.png" />
     <Content Include="Buffs\Root.png" />
-    <Content Include="Buffs\Thrown.png" />
     <Content Include="Buffs\TrollRegeneration.png" />
+    <Content Include="Gores\Barrier.png" />
+    <Content Include="Gores\BarrierEffect.png" />
+    <Content Include="Gores\Berserk.png" />
     <Content Include="Gores\Block.png" />
     <Content Include="Gores\BlockEffect.png" />
+    <Content Include="Gores\BloodRite.png" />
+    <Content Include="Gores\Cleave.png" />
     <Content Include="Gores\Dig.png" />
     <Content Include="Gores\EarthenShell.png" />
+    <Content Include="Gores\EnderLegacy.png" />
+    <Content Include="Gores\EnergySteal.png" />
+    <Content Include="Gores\ExplodingCorpses.png" />
     <Content Include="Gores\Fireball.png" />
     <Content Include="Buffs\ManaBreak.png" />
     <Content Include="Buffs\PowerSurge.png" />
@@ -163,19 +188,27 @@
     <Content Include="Gores\MagicElement.png" />
     <Content Include="Gores\ManaBlast.png" />
     <Content Include="Gores\ManaShield.png" />
+    <Content Include="Gores\MirageSlash.png" />
     <Content Include="Gores\MirrorShield.png" />
     <Content Include="Gores\NatureProtection.png" />
+    <Content Include="Gores\OverwhelmingPressure.png" />
+    <Content Include="Gores\Perfection.png" />
     <Content Include="Gores\PlaceholderFrame.png" />
     <Content Include="Gores\PoisonZone.png" />
     <Content Include="Gores\PowerSurge.png" />
     <Content Include="Gores\RangePath.png" />
     <Content Include="Gores\Roots.png" />
     <Content Include="Gores\SageMode.png" />
+    <Content Include="Gores\Shadowstep.png" />
+    <Content Include="Gores\Shockwave.png" />
+    <Content Include="Gores\Slash.png" />
+    <Content Include="Gores\Swipe.png" />
     <Content Include="Gores\ThornSword.png" />
     <Content Include="Gores\Throw.png" />
     <Content Include="Gores\ToggleElement0.png" />
     <Content Include="Gores\ToggleElement1.png" />
     <Content Include="Gores\TrollsBlood.png" />
+    <Content Include="Gores\Unbreakable.png" />
     <Content Include="Gores\WarriorPath.png" />
     <Content Include="Items\PrimeElement.png" />
     <Content Include="Projectiles\ArcaneBolt.png" />
@@ -186,11 +219,20 @@
     <Content Include="Projectiles\HeallingDummy.png" />
     <Content Include="Projectiles\LightningForm.png" />
     <Content Include="Projectiles\ManaWhirl.png" />
+    <Content Include="Projectiles\MirageSlash.png" />
     <Content Include="Projectiles\PoisonSerpent.png" />
+    <Content Include="Projectiles\PressureBolt.png" />
     <Content Include="Projectiles\RootZone.png" />
+    <Content Include="Projectiles\Shadow.png" />
+    <Content Include="Projectiles\Shockwave.png" />
+    <Content Include="Projectiles\Slash.png" />
+    <Content Include="Projectiles\ThrowDummy.png" />
     <Content Include="Sounds\beep.wav" />
     <Content Include="Sounds\BigDrum.wav" />
+    <Content Include="Sounds\Barrier.wav" />
+    <Content Include="Sounds\BarrierBreak.wav" />
     <Content Include="Sounds\Parry.wav" />
+    <Content Include="Sounds\Shadowstep.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

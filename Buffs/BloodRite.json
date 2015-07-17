@@ -1,0 +1,8 @@
+{
+	"displayName": "Blood Rite",
+	"tip": "You are a vampire! Kinda..",
+	"debuff": true,
+	"vanityPet": false,
+	"lightPet": false,
+	"enchantment": false
+}

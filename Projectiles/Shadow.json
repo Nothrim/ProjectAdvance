@@ -1,0 +1,12 @@
+﻿{
+	"displayName": "Shadow",
+	"size": [40, 60],
+	"aiStyle": 0,
+	"timeLeft": 120,
+	"friendly": true,
+	"hostile": false,	
+	"tileCollide": false,
+	"penetrate": 30,
+	"frameCount": 3,
+	"damage": 1
+}
