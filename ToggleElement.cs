@@ -43,6 +43,7 @@ namespace ProjectAdvance
                 SkillImage=Main.goreTexture[GoreDef.gores["ProjectAdvance:ToggleElement0"]];
             if (SkillSlotSurface.Contains(Main.mouse))
             {
+                Main.localPlayer.mouseInterface = true;
                 if (SkillSlotSurface.Contains(Main.mouse) && Main.mouseLeft)
                 {
                     sb.Draw(SkillImage, SkillSlotSurface, Color.Peru);

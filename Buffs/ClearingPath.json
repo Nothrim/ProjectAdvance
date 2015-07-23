@@ -1,0 +1,8 @@
+{
+	"displayName": "Clearing Path",
+	"tip": "Choosing new path",
+	"debuff": true,
+	"vanityPet": false,
+	"lightPet": false,
+	"enchantment": false
+}

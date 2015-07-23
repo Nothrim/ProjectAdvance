@@ -1,0 +1,14 @@
+﻿{
+	"displayName": "Rail Projectile",
+	"size": [40, 3],
+	"aiStyle": 0,
+	"timeLeft": 120,
+	"friendly": true,
+	"hostile": false,	
+	"titleColide":false,
+	"damage": 1,
+	"ignoreWater": true,
+	"ranged":true,
+	"noGravity": true, 
+	"penetrate": 100
+}

@@ -1,0 +1,20 @@
+{
+	"displayName": "Orb of Clearing",
+	"size": [28,26],
+	"maxStack": 999,
+	"value": [0,10,8,20],	
+	"rare": 8,
+	"useStyle": 2,
+	"useAnimation": 10,
+	"useTime": 10,
+	"useTurn": true,
+	"tooltip": "Absorb it to reset skill tree",
+	"buff": "ProjectAdvance:Clearing",
+	"buffTime": 5,
+	"consumable": true,
+	"recipes":
+	[{
+		"items": { "ProjectAdvance:PrimeElement": 10 }, 
+		"creates": 1	
+	}]
+}

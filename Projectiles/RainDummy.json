@@ -1,0 +1,14 @@
+﻿{
+	"displayName": "Bullet Rain",
+	"size": [50, 40],
+	"aiStyle": 0,
+	"timeLeft": 180,
+	"friendly": true,
+	"hostile": false,	
+	"titleColide":false,
+	"damage": 1,
+	"frameCount": 4,
+	"ignoreWater": true,
+	"noGravity": true, 
+	"penetrate": 200
+}

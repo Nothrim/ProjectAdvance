@@ -1,0 +1,12 @@
+﻿{
+	"displayName": "Root Zone",
+	"size": [40, 40],
+	"aiStyle": 0,
+	"timeLeft": 1800,
+	"friendly": true,
+	"hostile": false,	
+	"tileCollide": false,
+	"frameCount": 5,
+	"penetrate": 200,
+	"damage": 1
+}

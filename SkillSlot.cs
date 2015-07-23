@@ -68,7 +68,7 @@ namespace ProjectAdvance
                 player.cantUse();
                 if (Tooltip != "")
                 {
-                    sb.DrawString(Main.fontMouseText, name, new Vector2(position.X, position.Y + STANDARD_SIZE), Color.Purple);
+                    sb.DrawString(Main.fontMouseText, name, new Vector2(position.X, position.Y + STANDARD_SIZE), Color.Orange);
                     sb.DrawString(Main.fontMouseText, Tooltip, new Vector2(position.X, position.Y + STANDARD_SIZE + 20), Color.LightGray);
                 }
                 if (Chosen && Usable && Keyboard.GetState().GetPressedKeys().Length > 0)

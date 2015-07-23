@@ -1,0 +1,8 @@
+{
+	"displayName": "Barrage",
+	"tip": "Tratatatatatata!",
+	"debuff": true,
+	"vanityPet": false,
+	"lightPet": false,
+	"enchantment": false
+}

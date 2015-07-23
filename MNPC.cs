@@ -15,7 +15,7 @@ namespace ProjectAdvance
         static int WorldSkillCounter = 0;
         public override void PostNPCLoot()
         {
-            int random = Main.rand.Next(20);
+            int random = Main.rand.Next(40);
             if ( npc.lifeMax > 10 * WorldSkillCounter && random == 3 )
             {
                 WorldSkillCounter++;

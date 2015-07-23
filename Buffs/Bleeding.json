@@ -1,0 +1,8 @@
+{
+	"displayName": "Bleeding",
+	"tip": "-1% hp /s",
+	"debuff": true,
+	"vanityPet": false,
+	"lightPet": false,
+	"enchantment": false
+}

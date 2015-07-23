@@ -1,0 +1,8 @@
+{
+	"displayName": "Chain Reaction",
+	"tip": "10% chance to spawn another projectile dealing 50% damage",
+	"debuff": true,
+	"vanityPet": false,
+	"lightPet": false,
+	"enchantment": false
+}

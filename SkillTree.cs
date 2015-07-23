@@ -26,6 +26,10 @@ namespace ProjectAdvance
         ToggleElement ToggleTree;
         List<SkillSlot> Tree=new List<SkillSlot>();
         SpriteBatch sb;
+        Color Cmain;
+        Color Cfirst;
+        Color Csecond;
+        Color Cthird;
         #endregion 
         public SkillTree(SpriteBatch sb) {
         this.sb=sb;
@@ -65,6 +69,10 @@ namespace ProjectAdvance
         {
             if (ModPlayer.getPath() == 1)
             {
+                Cmain = Color.Red;
+                Cfirst = Color.GreenYellow;
+                Csecond = Color.Red;
+                Cthird = Color.BlueViolet;
                 Tree[0].setTexture("ProjectAdvance:Might!");
                 Tree[0].setTooltip("10% increased damage with melee hits");
                 Tree[1].setTexture("ProjectAdvance:LayeredArmor");
@@ -143,6 +151,10 @@ namespace ProjectAdvance
             }
             if (ModPlayer.getPath() == 2)
             {
+                Cmain = Color.Purple;
+                Cfirst = Color.Purple;
+                Csecond = Color.Orange;
+                Cthird = Color.GreenYellow;
                 Tree[0].setTexture("ProjectAdvance:MagicElement");
                 Tree[0].setTooltip("Grants various attributes required for begginer mages");
                 Tree[1].setTexture("ProjectAdvance:ManaShield");
@@ -222,6 +234,86 @@ namespace ProjectAdvance
                         ModPlayer.Hotkeys.Remove(kvp.Key);
                 }
             }
+            if (ModPlayer.getPath() == 3)
+            {
+                Cmain = Color.Cyan;
+                Cfirst = Color.Cyan;
+                Csecond = Color.IndianRed;
+                Cthird = Color.LightYellow;
+                Tree[0].setTexture("ProjectAdvance:Marksmanship");
+                Tree[0].setTooltip("+1 penetration on all projectiles");
+                Tree[1].setTexture("ProjectAdvance:DeadlyShot");
+                Tree[1].setTooltip("Gain 100% critical chance for one shot[25% chance after killing an enemy from range]");
+                Tree[2].setTexture("ProjectAdvance:Penetration");
+                Tree[2].setTooltip("All your ranged projectiles can penetrate through at least 3 enemies");
+                Tree[3].setTexture("ProjectAdvance:Snipe");
+                Tree[3].setTooltip("Increase your damage based on your distance from enemy, [max+50% on full screen distance]");
+                Tree[4].setTexture("ProjectAdvance:Precision");
+                Tree[4].setTooltip("Stackable buff, gain stack when not shooting for 2 seconds, up to 500% damage");
+                Tree[5].setTexture("ProjectAdvance:JumpBack");
+                Tree[5].setTooltip("Move quickly opposite to mouse direction");
+                Tree[5].usable();
+                Tree[5].setCooldownTimer(10);
+                Tree[6].setTexture("ProjectAdvance:SnipingStance");
+                Tree[6].setTooltip("You can move camera freely and shot projectiles with insane velocity ,but you cant move character");
+                Tree[6].usable();
+                Tree[6].setCooldownTimer(10);
+                Tree[7].setTexture("ProjectAdvance:RailShot");
+                Tree[7].setTooltip("Fire powerfull projectile, dealing double weapon damage [5 sec cooldown]");
+                Tree[7].usable();
+                Tree[7].setCooldownTimer(300);
+                Tree[8].setTexture("ProjectAdvance:SplitShot");
+                Tree[8].setTooltip("25% chance to shoot another projectile when attacking");
+                Tree[9].setTexture("ProjectAdvance:BouncingProjectile");
+                Tree[9].setTooltip("Your projectiles have 50% chance to bounce when hitting a tile");
+                Tree[10].setTexture("ProjectAdvance:BulletRain");
+                Tree[10].setTooltip("Rain projectiles on your enemies! Spawned on mouse position, 50% weapon damage [uses 50 ammo][15 sec cooldown]");
+                Tree[10].usable();
+                Tree[10].setCooldownTimer(900);
+                Tree[11].setTexture("ProjectAdvance:Adrenaline");
+                Tree[11].setTooltip("+10% ranged damage for each enemy close to player");
+                Tree[12].setTexture("ProjectAdvance:MasterOfBullets");
+                Tree[12].setTooltip("When you kill enemy you have 50% chance to spawn projectile following you, hotkey to relase[30 sec cooldown][max 15]");
+                Tree[12].usable();
+                Tree[12].setCooldownTimer(1800);
+                Tree[13].setTexture("ProjectAdvance:Barrage");
+                Tree[13].setTooltip("Shoot projectiles like crazy! [-50% damage][3 sec cooldown]");
+                Tree[13].usable();
+                Tree[13].setCooldownTimer(180);
+                Tree[14].setTexture("ProjectAdvance:ChainReaction");
+                Tree[14].setTooltip("10% chance to spawn projectile on hit[50% damage][1 minute cooldown]");
+                Tree[14].usable();
+                Tree[14].setCooldownTimer(3600);
+                Tree[15].setTexture("ProjectAdvance:Tinker");
+                Tree[15].setTooltip("Create various deadly things!");
+                Tree[15].usable();
+                Tree[15].setCooldownTimer(30);
+                Tree[16].setTexture("ProjectAdvance:ExplosiveMaster");
+                Tree[16].setTooltip("You can create explosives!");
+                Tree[17].setTexture("ProjectAdvance:Bleeding");
+                Tree[17].setTooltip("10% chance on hit to apply bleeding [-1% max hp/s]");
+                Tree[18].setTexture("ProjectAdvance:FanOfKnives");
+                Tree[18].setTooltip("12-50 damage [1 sec cooldown]");
+                Tree[18].usable();
+                Tree[18].setCooldownTimer(60);
+                Tree[19].setTexture("ProjectAdvance:Hunter");
+                Tree[19].setTooltip("Deal double damage to foes above 75% hp");
+                Tree[20].setTexture("ProjectAdvance:GorgonEye");
+                Tree[20].setTooltip("Spawn stationary sentry[30 sec cooldown]");
+                Tree[20].usable();
+                Tree[20].setCooldownTimer(1800);
+                Tree[21].setTexture("ProjectAdvance:PotionOverdose");
+                Tree[21].setTooltip("For 10s protects you from Potion Skickness[2 minute cooldown]");
+                Tree[21].usable();
+                Tree[21].setCooldownTimer(7200);
+                foreach (KeyValuePair<int, Keys?> kvp in ModPlayer.Hotkeys)
+                {
+                    if (Tree[kvp.Key].isUsable())
+                        Tree[kvp.Key].setHotkey(kvp.Value);
+                    else
+                        ModPlayer.Hotkeys.Remove(kvp.Key);
+                }
+            }
         }
         public void drawTree()
         {
@@ -230,10 +322,10 @@ namespace ProjectAdvance
             ToggleTree.draw(sb);        
             if (ToggleTree.isChoosen())
             {
-                Line.DrawLine(sb, new Vector2(Tree.ElementAt(0).getPosition().X + 20, Tree.ElementAt(0).getPosition().Y + 20), new Vector2(Tree.ElementAt(BRANCH_SIZE-2).getPosition().X + 80, Tree.ElementAt(BRANCH_SIZE-2).getPosition().Y + 20), Color.Purple, 5);
-                Line.DrawLine(sb, new Vector2(Tree.ElementAt(0).getPosition().X + 20, Tree.ElementAt(0).getPosition().Y + 20), new Vector2(Tree.ElementAt(0).getPosition().X + 20, Tree.ElementAt(0).getPosition().Y + 180), Color.Purple, 5);
-                Line.DrawLine(sb, new Vector2(Tree.ElementAt(0).getPosition().X + 20, Tree.ElementAt(0).getPosition().Y + 100), new Vector2(Tree.ElementAt(BRANCH_SIZE + 6).getPosition().X + 20, Tree.ElementAt(BRANCH_SIZE + 5).getPosition().Y + 20), Color.OrangeRed, 5);
-                Line.DrawLine(sb, new Vector2(Tree.ElementAt(0).getPosition().X + 20, Tree.ElementAt(0).getPosition().Y + 180), new Vector2(Tree.ElementAt(BRANCH_SIZE + 13).getPosition().X + 20, Tree.ElementAt(BRANCH_SIZE + 13).getPosition().Y + 20), Color.LawnGreen, 5);
+                Line.DrawLine(sb, new Vector2(Tree.ElementAt(0).getPosition().X + 20, Tree.ElementAt(0).getPosition().Y + 20), new Vector2(Tree.ElementAt(BRANCH_SIZE-2).getPosition().X + 80, Tree.ElementAt(BRANCH_SIZE-2).getPosition().Y + 20), Cfirst, 5);
+                Line.DrawLine(sb, new Vector2(Tree.ElementAt(0).getPosition().X + 20, Tree.ElementAt(0).getPosition().Y + 20), new Vector2(Tree.ElementAt(0).getPosition().X + 20, Tree.ElementAt(0).getPosition().Y + 180), Cmain, 5);
+                Line.DrawLine(sb, new Vector2(Tree.ElementAt(0).getPosition().X + 20, Tree.ElementAt(0).getPosition().Y + 100), new Vector2(Tree.ElementAt(BRANCH_SIZE + 6).getPosition().X + 20, Tree.ElementAt(BRANCH_SIZE + 5).getPosition().Y + 20), Csecond, 5);
+                Line.DrawLine(sb, new Vector2(Tree.ElementAt(0).getPosition().X + 20, Tree.ElementAt(0).getPosition().Y + 180), new Vector2(Tree.ElementAt(BRANCH_SIZE + 13).getPosition().X + 20, Tree.ElementAt(BRANCH_SIZE + 13).getPosition().Y + 20), Cthird, 5);
                 for (int i = 0; i < (Tree.Count); i++)
                 {
                     SkillSlot s = Tree.ElementAt(i);

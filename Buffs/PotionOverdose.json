@@ -1,0 +1,8 @@
+{
+	"displayName": "Potion Overdose",
+	"tip": "Gulp! Gulp! Gulp!",
+	"debuff": true,
+	"vanityPet": false,
+	"lightPet": false,
+	"enchantment": false
+}

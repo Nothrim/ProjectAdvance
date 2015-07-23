@@ -61,6 +61,18 @@ namespace ProjectAdvance
         int BarrierDurability = 0;
         bool BarrierUp = false;
         int BarrierTimer;
+        //camera variables
+        public Vector2 lastCameraPos = new Vector2(-1, -1);
+        //Master of Bullet variables
+        Projectile[] bullets;
+        int BulletCounter;
+        //Tinker mechanic
+        bool DrawCrafting = false;
+        Crafting Tinker;
+        //-----------------
+        int Ascension=0;
+        public void Ascend() { Ascension = 1; }
+
         public int getBarrierDurability() { return BarrierDurability; }
         public void spendSkillPoint()
         {
@@ -70,7 +82,7 @@ namespace ProjectAdvance
         }
         public void grandSkillPoint()
         {
-            if (SkillLevel < 9)
+            if (SkillLevel < 9+Ascension)
             {
                 SkillLevel++;
                 SkillPoints++;
@@ -79,8 +91,24 @@ namespace ProjectAdvance
         #endregion
         #region SaveLoadInitialization
         public void cantUse() { CanUse = false; }
+        public void ClearSkills()
+        {
+            SkillPoints = 0;
+            SkillLevel = 0;
+            for (int i = 0; i < SkillsById.Length; i++)
+                SkillsById[i] = false;
+            for (int i = 0; i < SkillsById.Length; i++)
+            {
+                minterface.setupField(i, SkillsById[i]);
+            }
+
+        }
+        public int getCooldownTime(int id) {return CManager.getTime(id); }
+        public bool SkillIsUsed(int id) { return !CManager.isUsable(id); }
         public override void Initialize()
         {
+            bullets = new Projectile[15];
+            BulletCounter = 0;
             SkillsById = new bool[22];
             SkillPoints = 0;
             SkillLevel = 0;
@@ -88,6 +116,7 @@ namespace ProjectAdvance
             TreeCleared = false;
             Path = 0;
             Hotkeys = new Dictionary<int, Keys?>();
+
             base.Initialize();
         }
 
@@ -127,6 +156,7 @@ namespace ProjectAdvance
 
                 loaded = true;
                 CManager = new CooldownManager(new Vector2(Main.screenWidth, Main.screenHeight), Main.spriteBatch);
+                
                 if (Path == 1)
                 {
                     if (SkillsById[3]) { CManager.addCooldown(3, "TrollsBlood", "ProjectAdvance:TrollsBlood", 3600); }
@@ -160,6 +190,20 @@ namespace ProjectAdvance
                     if (SkillsById[19]) { CManager.addCooldown(19, "ThornSword", "ProjectAdvance:ThornSword", 10); }
                     if (SkillsById[20]) { CManager.addCooldown(20, "PoisonZone", "ProjectAdvance:PoisonZone", 900); }
                     if (SkillsById[21]) { CManager.addCooldown(21, "ForceOfNature", "ProjectAdvance:ForceOfNature", 1800); }
+                }
+                else if(Path==3)
+                {
+                    if (SkillsById[5]) { CManager.addCooldown(5, "JumpBack", "ProjectAdvance:JumpBack", 10); }
+                    if (SkillsById[6]) { CManager.addCooldown(6, "SnipingStance", "ProjectAdvance:SnipingStance", 10); }
+                    if(SkillsById[7]){CManager.addCooldown(7,"RailShot","ProjectAdvance:RailShot",300);}
+                    if(SkillsById[10]){CManager.addCooldown(10,"BulletRain","ProjectAdvance:BulletRain",900);}
+                    if (SkillsById[12]) { CManager.addCooldown(12, "MasterOfBullets", "ProjectAdvance:MasterOfBullets", 1800); }
+                    if (SkillsById[13]) { CManager.addCooldown(13, "Barrage", "ProjectAdvance:Barrage", 180); }
+                    if (SkillsById[14]) { CManager.addCooldown(14, "ChainReaction", "ProjectAdvance:ChainReaction", 3600); }
+                    if (SkillsById[15]) { CManager.addCooldown(15, "Tinker", "ProjectAdvance:Tinker", 30); }
+                    if (SkillsById[18]) { CManager.addCooldown(18, "FanOfKnives", "ProjectAdvance:FanOfKnives", 60); }
+                    if (SkillsById[20]) { CManager.addCooldown(20, "GorgonEye", "ProjectAdvance:GorgonEye", 1800); }
+                    if (SkillsById[21]) { CManager.addCooldown(21, "PotionOverdose", "ProjectAdvance:PotionOverdose", 7200); }
                 }
 
             }
@@ -320,9 +364,12 @@ namespace ProjectAdvance
                     minterface.setupField(i, SkillsById[i]);
                 }
                 TreeCleared = true;
+                Tinker = new Crafting();
+                Tinker.Initialize(Main.localPlayer);
             }
             base.PostUpdate();
-            if(Path==1)
+            #region warrior skills
+            if (Path==1)
             {
                 if(player==Main.localPlayer)
                 {
@@ -522,6 +569,7 @@ namespace ProjectAdvance
                      }
                 }
             }
+            #endregion
             #region mage skills
             else if (Path == 2)
             {//0-none,1-warrior,2-mage,3-range
@@ -741,6 +789,178 @@ namespace ProjectAdvance
                 }
             }
             #endregion
+            if (Path == 3)
+            {
+                if(BulletCounter>0 && player==Main.localPlayer)
+                {
+                    foreach(Projectile p in bullets)
+                    {
+                        if(p!=null && p.active)
+                        {
+                            p.timeLeft++;
+                            p.velocity = player.velocity;
+                            p.velocity.Y =0;
+                            if(p.Distance(player.position)>200)
+                            {
+                                p.position = player.position;
+                            }
+                        }
+                    }
+                }
+                if (SkillsById[13])
+                {
+                    if (!CManager.isUsable(13) && player == Main.localPlayer && CManager.getTime(13) < 60)
+                    {
+                        player.heldItem.useTime = 2;
+                        player.delayUseItem = false;
+                        player.controlUseItem = true;
+                        player.releaseUseItem = true;
+
+                    }
+                    else if (!CManager.isUsable(13) && CManager.getTime(13) == 61)
+                    {
+
+                        player.heldItem.useTime = ItemUseTime;
+                    }
+                }
+                if (CanUse && player == Main.localPlayer)
+                {
+                    if(player.HasBuff(BuffDef.byName["ProjectAdvance:SnipingStance"])!=-1)
+                    {
+                    if (lastCameraPos.X == -1 && lastCameraPos.Y == -1) lastCameraPos = Main.screenPosition;
+					float speed = 8;
+					if (player.controlTorch) speed *= 2;
+					if (player.controlLeft) lastCameraPos.X -= speed;
+					if (player.controlRight) lastCameraPos.X += speed;
+					if (player.controlUp) lastCameraPos.Y -= speed;
+					if (player.controlDown) lastCameraPos.Y += speed;
+					player.controlJump=player.controlTorch = player.controlLeft = player.controlRight = player.controlUp = player.controlDown = false;
+                    }
+                    if (SkillsById[4] && player.HasBuff(BuffDef.byName["ProjectAdvance:Precision0"]) == -1 && player.HasBuff(BuffDef.byName["ProjectAdvance:Precision5"]) == -1 && player.HasBuff(BuffDef.byName["ProjectAdvance:Precision1"]) == -1 && player.HasBuff(BuffDef.byName["ProjectAdvance:Precision2"]) == -1
+                        && player.HasBuff(BuffDef.byName["ProjectAdvance:Precision3"]) == -1 && player.HasBuff(BuffDef.byName["ProjectAdvance:Precision4"]) == -1)
+                    {
+                        player.AddBuff(BuffDef.byName["ProjectAdvance:Precision0"], 120);
+                    }
+                    if (SkillsById[5] && Hotkeys.ContainsKey(5) && Hotkeys[5] != null && (Main.GetKeyState((int)Hotkeys[5]) == -127 || Main.GetKeyState((int)Hotkeys[5]) == -128) && (CManager.isUsable(5)))
+                    {
+                        CManager.useSkill(5);
+                        player.velocity = Vector2.Multiply(Vector2.Normalize(Main.mouseWorld - player.position), -10);
+                        if (player.velocity.Y >= -2)player.velocity.Y -= 4; 
+                        if(player.heldItem.ranged)
+                        {
+                            player.controlUseItem = true;
+                        }
+                    }
+                     if(SkillsById[6] && Hotkeys.ContainsKey(6) && Hotkeys[6] != null && (Main.GetKeyState((int)Hotkeys[6]) == -127 || Main.GetKeyState((int)Hotkeys[6]) == -128) && (CManager.isUsable(6)))
+                     {
+                         CManager.useSkill(6);
+                         if(player.HasBuff(BuffDef.byName["ProjectAdvance:SnipingStance"])==-1)
+                         {
+                             lastCameraPos = Main.screenPosition;
+                             player.AddBuff(BuffDef.byName["ProjectAdvance:SnipingStance"], 9999);
+                         }
+                         else
+                         {
+                             player.ClearBuff(BuffDef.byName["ProjectAdvance:SnipingStance"]);
+                         }
+                     }
+                  if(SkillsById[7] && Hotkeys.ContainsKey(7) && Hotkeys[7] != null && (Main.GetKeyState((int)Hotkeys[7]) == -127 || Main.GetKeyState((int)Hotkeys[7]) == -128) && (CManager.isUsable(7)) && player.heldItem.ranged)
+                  {
+                      CManager.useSkill(7);
+                      int id;
+                      id=Projectile.NewProjectile(player.Center, Vector2.Multiply(Vector2.Normalize(Main.mouseWorld - player.position), 20), ProjDef.byName["ProjectAdvance:RailProjectile"].type, player.heldItem.damage * 2, 0, player.whoAmI);
+                      Main.projectile[id].tileCollide = false;
+                      Main.projectile[id].light = 0.4f;
+                  }
+                    if(SkillsById[10] && Hotkeys.ContainsKey(10) && Hotkeys[10] != null && (Main.GetKeyState((int)Hotkeys[10]) == -127 || Main.GetKeyState((int)Hotkeys[10]) == -128) && (CManager.isUsable(10)) && player.heldItem.ranged)
+                    {
+                        bool HasAmmo=false;
+                        int damage=0;
+                        int SlotID = 0;
+                        for (int i = player.inventory.Length - 5;i<player.inventory.Length; i++ )
+                        {
+                            if(player.inventory[i].stack>50 && player.inventory[i].damage>damage)
+                            {
+                                HasAmmo = true;
+                                damage = player.inventory[i].damage;
+                                SlotID = i;
+                            }
+                        }
+                        if (HasAmmo)
+                        {
+                            CManager.useSkill(10);
+                            player.inventory[SlotID].stack-=50;
+                            Main.projectile[Projectile.NewProjectile(Main.mouseWorld, Vector2.Zero, ProjDef.byName["ProjectAdvance:RainDummy"].type, 1, 3, player.whoAmI)].GetSubClass<Projectiles.RainDummy>().setup(player.inventory[SlotID].shoot, player.inventory[SlotID].damage + (int)((float)player.heldItem.damage * player.rangedDamage * 0.5f));
+                        }
+                    }
+                    if(SkillsById[12] && Hotkeys.ContainsKey(12) && Hotkeys[12] != null && (Main.GetKeyState((int)Hotkeys[12]) == -127 || Main.GetKeyState((int)Hotkeys[12]) == -128) && (CManager.isUsable(12)))
+                    {
+                        if(BulletCounter>0)
+                        {
+                            foreach(Projectile bullet in bullets)
+                            {
+                                if(bullet!=null && bullet.active)
+                                {
+                                    bullet.timeLeft = 180;
+                                    bullet.velocity = Vector2.Multiply(Vector2.Normalize(Main.mouseWorld - player.position), 15);
+                                }
+                            }
+                            for(int i=0;i<BulletCounter;i++)
+                            {
+                                bullets[i] = null;
+                            }
+                            BulletCounter = 0;
+                            CManager.useSkill(12);
+                        }
+                    }
+                     if(SkillsById[13] && Hotkeys.ContainsKey(13) && Hotkeys[13] != null && (Main.GetKeyState((int)Hotkeys[13]) == -127 || Main.GetKeyState((int)Hotkeys[13]) == -128) && (CManager.isUsable(13)))
+                     {
+                         if (player.heldItem.ranged)
+                         {
+                             ItemUseTime = player.heldItem.useTime;
+                             CManager.useSkill(13);
+                             player.AddBuff(BuffDef.byName["ProjectAdvance:Barrage"], 60);
+                         }
+                     }
+                     if(SkillsById[14] && Hotkeys.ContainsKey(14) && Hotkeys[14] != null && (Main.GetKeyState((int)Hotkeys[14]) == -127 || Main.GetKeyState((int)Hotkeys[14]) == -128) && (CManager.isUsable(14)))
+                     {
+                         CManager.useSkill(14);
+                         player.AddBuff(BuffDef.byName["ProjectAdvance:ChainReaction"], 600);
+                     }
+                    if(SkillsById[15] && Hotkeys.ContainsKey(15) && Hotkeys[15] != null && (Main.GetKeyState((int)Hotkeys[15]) == -127 || Main.GetKeyState((int)Hotkeys[15]) == -128) && (CManager.isUsable(15)))
+                    {
+                        CManager.useSkill(15);
+                        if (DrawCrafting)
+                        {
+                            DrawCrafting = false;
+                        }
+                        else
+                            DrawCrafting = true;
+                    }
+                    if(SkillsById[18] && Hotkeys.ContainsKey(18) && Hotkeys[18] != null && (Main.GetKeyState((int)Hotkeys[18]) == -127 || Main.GetKeyState((int)Hotkeys[18]) == -128) && (CManager.isUsable(18)))
+                    {
+                        CManager.useSkill(18);
+                        int id;
+                        for(int i=0;i<20;i++)
+                        {
+                            id=Projectile.NewProjectile(player.Center, new Vector2((float)Math.Sin(i*18),(float)Math.Cos(i*18))*10, 48, (int)(Main.rand.Next(12, 50) * player.rangedDamage), 1, player.whoAmI);
+                            Main.projectile[id].tileCollide=false;
+                            Main.projectile[id].timeLeft = 60;
+                            Main.projectile[id].noDropItem = true;
+                        }
+                    }
+                     if(SkillsById[20] && Hotkeys.ContainsKey(20) && Hotkeys[20] != null && (Main.GetKeyState((int)Hotkeys[20]) == -127 || Main.GetKeyState((int)Hotkeys[20]) == -128) && (CManager.isUsable(20)))
+                     {
+                         CManager.useSkill(20);
+                         Projectile.NewProjectile(Main.mouseWorld, Vector2.Zero, ProjDef.byName["ProjectAdvance:GorgonSentry"].type, Math.Max(15, player.heldItem.damage), 3, player.whoAmI);
+                     }
+                     if(SkillsById[21] && Hotkeys.ContainsKey(21) && Hotkeys[21] != null && (Main.GetKeyState((int)Hotkeys[21]) == -127 || Main.GetKeyState((int)Hotkeys[21]) == -128) && (CManager.isUsable(21)))
+                     {
+                         CManager.useSkill(21);
+                         player.AddBuff(BuffDef.byName["ProjectAdvance:PotionOverdose"], 600);
+                     }
+                }
+            }
         }
         public override void PreHurt(bool pvp, bool quiet, ref bool getHurt, ref bool playSound, ref bool genGore, ref int damage, ref int hitDirection, ref string deathText, ref bool crit, ref float critMultiplier)
         {
@@ -832,6 +1052,7 @@ namespace ProjectAdvance
                 {
                     PlayerLayer.Add(list, Barrier, PlayerLayer.LayerHead, false);
                 }
+                
             }
             base.ModifyDrawLayerList(list);
         }
@@ -840,6 +1061,23 @@ namespace ProjectAdvance
            
 
             base.PreUpdate();
+        }
+        public override void DrawMapIcon(SpriteBatch spritebatch, Vector2 drawPosition, float scale, Color color, ref string cursorText)
+        {
+            if (player==Main.localPlayer && DrawCrafting)
+            {
+                if (SkillsById[15] && SkillsById[16])
+                {
+                    Tinker.Update();
+                    Tinker.DrawAll(spritebatch);
+                }
+                else if (SkillsById[15])
+                {
+                    Tinker.Update();
+                    Tinker.Draw(spritebatch);
+                }
+            }
+            base.DrawMapIcon(spritebatch, drawPosition, scale, color, ref cursorText);
         }
         public override void DamageNPC(Projectile projectile, NPC npc, int hitDir, ref int damage, ref float knockback, ref bool crit, ref float critMult)
         {
@@ -855,6 +1093,41 @@ namespace ProjectAdvance
                     {
                         critMult += 1.5f;
                     }
+                }
+                if(Path==3)
+                {
+                    if(SkillsById[3] && projectile.ranged)
+                    {
+                        damage += (int)(damage*Math.Min(0.5f, player.Distance(npc.position) / 1920f));
+                    }
+                    if(SkillsById[1] && player.HasBuff("ProjectAdvance:DeadlyShot")==-1 && damage>=(npc.life-damage) && projectile.ranged && Main.rand.Next(4)==0)
+                    {
+                        player.AddBuff("ProjectAdvance:DeadlyShot", 60000);
+                    }
+                    if(SkillsById[11] && projectile.ranged)
+                    {
+                        int counter=0;
+                        foreach(NPC n in Main.npc)
+                        {
+                            if(n.active && !n.friendly && n.Distance(player.position)<1000)
+                                counter++;
+                        }
+                        damage += (int)(0.1f * counter * (float)damage);
+                      
+                    }
+                    if(SkillsById[12]&& CManager.isUsable(12) && projectile.ranged && projectile.damage>(npc.life-projectile.damage) && BulletCounter<15 && Main.rand.Next(2)==0)
+                    {
+                        bullets[BulletCounter] = Main.projectile[Projectile.NewProjectile(new Vector2(player.Center.X + Main.rand.Next(-100, 100), player.Center.Y + Main.rand.Next(-150, 20)), Vector2.Zero, projectile.type, projectile.damage, projectile.knockBack, projectile.owner)];
+                        bullets[BulletCounter].tileCollide = false;
+                        bullets[BulletCounter].timeLeft += 9999;
+                        BulletCounter++;
+                    }
+                    if(SkillsById[17] && Main.rand.Next(10)==0)
+                    {
+                            npc.AddBuff(BuffDef.byName["ProjectAdvance:Bleeding"], 900);
+                    }
+                    if (SkillsById[18] && npc.life > npc.lifeMax * 0.75f)
+                        damage *= 2;
                 }
             }
             base.DamageNPC(projectile, npc, hitDir, ref damage, ref knockback, ref crit, ref critMult);
@@ -937,10 +1210,31 @@ namespace ProjectAdvance
                             player.statMana += ManaDrain;
                         }
                     }
+                    if (SkillsById[18]) critMult += 0.5f;
                 }
-                if (SkillsById[18]) critMult += 0.5f;
+                if (Path == 3)
+                {
+                    if (SkillsById[17] && Main.rand.Next(10) == 0)
+                    {
+                        npc.AddBuff(BuffDef.byName["ProjectAdvance:Bleeding"], 900);
+                    }
+                    if (SkillsById[19] && npc.life>npc.lifeMax*0.75f)
+                        damage *= 2;
+                }
+                
                 base.DamageNPC(npc, hitDir, ref damage, ref knockback, ref crit, ref critMult);
             }
+        }
+        public override bool PreShoot(Vector2 position, Vector2 velocity, int projType, int damage, float knockback)
+        {
+            if(player==Main.localPlayer)
+            {
+                if(player.heldItem.ranged && SkillsById[8] && Main.rand.Next(4)==0)
+                {
+                    Projectile.NewProjectile(position, new Vector2(velocity.X- Main.rand.NextFloat() + Main.rand.NextFloat(), velocity.Y - 2*Main.rand.NextFloat() + 2*Main.rand.NextFloat()), projType, damage, knockback, player.whoAmI);
+                }
+            }
+            return base.PreShoot(position, velocity, projType, damage, knockback);
         }
     }
 }

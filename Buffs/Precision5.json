@@ -1,0 +1,9 @@
+{
+	"displayName": "Precision V",
+	"tip": "+500% ranged damage",
+	"debuff": true,
+	"vanityPet": false,
+	"lightPet": false,
+		"noTimer":true,
+	"enchantment": false
+}

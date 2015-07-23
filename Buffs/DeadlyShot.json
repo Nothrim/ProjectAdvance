@@ -1,0 +1,9 @@
+{
+	"displayName": "Deadly Shot",
+	"tip": "100% Critical Chance",
+	"debuff": true,
+	"vanityPet": false,
+	"noTimer":true,
+	"lightPet": false,
+	"enchantment": false
+}

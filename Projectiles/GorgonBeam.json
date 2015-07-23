@@ -1,0 +1,14 @@
+﻿{
+	"displayName": "Gorgon Beam",
+	"size": [50, 5],
+	"aiStyle": 0,
+	"timeLeft": 120,
+	"friendly": true,
+	"hostile": false,	
+	"titleColide":false,
+	"damage": 1,
+	"ignoreWater": true,
+	"magic": true,
+	"noGravity": true, 
+	"penetrate": 5
+}

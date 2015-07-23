@@ -1,0 +1,9 @@
+{
+	"displayName": "Precision I",
+	"tip": "+100% ranged damage",
+	"debuff": true,
+	"vanityPet": false,
+	"lightPet": false,
+		"noTimer":true,
+	"enchantment": false
+}

@@ -1,0 +1,20 @@
+{
+	"displayName": "Glyph of ascension",
+	"size": [28,26],
+	"maxStack": 999,
+	"value": [0,10,8,20],	
+	"rare": 8,
+	"useStyle": 2,
+	"useAnimation": 10,
+	"useTime": 10,
+	"useTurn": true,
+	"tooltip": "Break human limits!",
+	"buff": "ProjectAdvance:Ascend",
+	"buffTime": 5,
+	"consumable": true,
+	"recipes":
+	[{
+		"items": { "ProjectAdvance:OrbOfClearing": 1, "ProjectAdvance:PrimeElement":1,"ProjectAdvance:OrbOfPaths":1 }, 
+		"creates": 1	
+	}]
+}

@@ -1,0 +1,8 @@
+{
+	"displayName": "Clearing",
+	"tip": "Clearing skill tree",
+	"debuff": true,
+	"vanityPet": false,
+	"lightPet": false,
+	"enchantment": false
+}
